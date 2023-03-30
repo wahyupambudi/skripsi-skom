@@ -1,1 +1,25 @@
-<mxfile host="app.diagrams.net" modified="2023-03-30T07:05:32.553Z" agent="5.0 (Windows)" version="20.8.11" etag="eXbEGUNS43WwIUZg_vVL" type="github"><diagram name="Page-1" id="fjAUtiY4fOaBmuUqwm-S">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2023-03-30T07:52:19.479Z" agent="5.0 (Windows)" etag="ZNIswxfHrmRZpt9xbFT_" version="20.8.11" type="github">
+  <diagram name="Page-1" id="fjAUtiY4fOaBmuUqwm-S">
+    <mxGraphModel dx="880" dy="470" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="YqDw1BRd7cmpl0hkqm-_-1" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="110" y="140" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YqDw1BRd7cmpl0hkqm-_-2" value="Ketua Jurusan" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="700" y="250" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YqDw1BRd7cmpl0hkqm-_-3" value="Operator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="700" y="80" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YqDw1BRd7cmpl0hkqm-_-5" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="380" y="70" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YqDw1BRd7cmpl0hkqm-_-6" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Mengelola Data User&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="220" y="140" width="130" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
