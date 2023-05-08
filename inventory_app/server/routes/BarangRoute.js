@@ -1,0 +1,29 @@
+import express from "express";
+import {
+  getBarangs,
+  getBarangById,
+  createBarang,
+  updateBarang,
+  deleteBarang,
+} from "../controllers/Barangs.js";
+import {
+  verifyUser,
+  ketuaJurusan,
+  verifyToken,
+} from "../middleware/AuthUser.js";
+
+const router = express.Router();
+
+router.get("/barangs", verifyUser, getBarangs);
+router.get("/barangs/:id", verifyUser, verifyToken, getBarangById);
+router.post("/barangs", verifyUser, createBarang);
+router.patch(
+  "/barangs/:id",
+  verifyUser,
+  // verifyToken,
+  ketuaJurusan,
+  updateBarang
+);
+router.delete("/barangs/:id", verifyUser, ketuaJurusan, deleteBarang);
+
+export default router;
