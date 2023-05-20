@@ -1,15 +1,16 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
 import Users from "./UserModel.js";
+import Barangs from "./BrgModel.js";
 
 // destruct datatype
 const { DataTypes } = Sequelize;
 
-// membuat table Barangs
-const Barangs = db.define(
-  "tb_barang",
+// membuat table srvBrg
+const srvBrg = db.define(
+  "tb_service_brg",
   {
-    uuid_brg: {
+    uuid_brg_srv: {
       type: DataTypes.STRING,
       // membuat uuid secara otomatis
       defaultValue: DataTypes.UUIDV4,
@@ -19,75 +20,79 @@ const Barangs = db.define(
         notEmpty: true,
       },
     },
-    kd_brg: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      index: true,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    nm_brg: {
+    kd_brg_srv: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    spek_brg: {
+    nm_brg_srv: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    kondisi_brg: {
+    spek_brg_srv: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    lokasi_brg: {
+    srv_list: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    tgl_buy_brg: {
+    lokasi_srv: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    tgl_mulai: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    harga_brg: {
+    harga_srv: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    image_brg: {
+    status_srv: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    url_brg: {
-      type: DataTypes.STRING,
+    tgl_selesai: {
+      type: DataTypes.DATEONLY,
       allowNull: true,
-    },
-    qrcode_brg: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    qrcode_url_brg: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      validate: {
+        notEmpty: false,
+      },
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    tbBarangId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
       validate: {
         notEmpty: true,
       },
@@ -98,10 +103,17 @@ const Barangs = db.define(
   }
 );
 
-Users.hasMany(Barangs);
-Barangs.belongsTo(Users, { foreignKey: "userId" });
+Users.hasMany(srvBrg);
+Barangs.hasMany(srvBrg);
+srvBrg.belongsTo(Users, { foreignKey: "userId" });
+// srvBrg.belongsTo(Barangs, { foreignKey: "srvId" });
+srvBrg.belongsTo(Barangs, {
+  foreignKey: "kd_brg_srv",
+  targetKey: "kd_brg",
+  onDelete: "CASCADE",
+});
 
-export default Barangs;
+export default srvBrg;
 
 // (async () => {
 //   await db.sync();

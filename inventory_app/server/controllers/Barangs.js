@@ -1,4 +1,5 @@
 import Barang from "../models/BrgModel.js";
+import HisBarang from "../models/HisBrg.js";
 import User from "../models/UserModel.js";
 import { Op } from "sequelize";
 import path from "path";
@@ -153,20 +154,20 @@ export const createBarang = async (req, res) => {
     // masukkan data di variabel finalText
     let finalText = `Data Barang \n\n${text}`;
 
-    const namaFile = Date.now() + "-" + nm_brg + ext;
+    const qrNameFile = Date.now() + "-" + nm_brg + ext;
 
     qrcode.toFile(
-      `./public/images/barang/qrcode/${namaFile}`,
+      `./public/images/barang/qrcode/${qrNameFile}`,
       finalText,
       function (err) {
         if (err) throw err;
-        // console.log(namaFile);
+        // console.log(qrNameFile);
       }
     );
 
     const qrUrl = `${req.protocol}://${req.get(
       "host"
-    )}/images/barang/qrcode/${namaFile}`;
+    )}/images/barang/qrcode/${qrNameFile}`;
 
     // proses create barang
     try {
@@ -180,7 +181,7 @@ export const createBarang = async (req, res) => {
         harga_brg: harga_brg,
         image_brg: fileName,
         url_brg: url,
-        qrcode_brg: namaFile,
+        qrcode_brg: qrNameFile,
         qrcode_url_brg: qrUrl,
         userId: req.userId,
       });
@@ -217,7 +218,7 @@ export const updateBarang = async (req, res) => {
 
   // kode untuk manajemen gambar
   let fileName;
-  let namaFile;
+  let qrNameFile;
   // check jika gambar null maka langsung update data selain image
   if (req.files === null) {
     fileName = barang.image;
@@ -269,76 +270,77 @@ export const updateBarang = async (req, res) => {
     // masukkan data di variabel finalText
     let finalText = `Data Barang \n\n${text}`;
 
-    let namaFile = Date.now() + "-" + nm_brg + ext;
+    let qrNameFile = "qr" + Date.now() + "-" + kd_brg + ext;
 
     qrcode.toFile(
-      `./public/images/barang/qrcode/${namaFile}`,
+      `./public/images/barang/qrcode/${qrNameFile}`,
       finalText,
       function (err) {
         if (err) throw err;
-        // console.log(namaFile);
       }
     );
-  }
 
-  // deklarasi variabel url diluar scope
-  const url = `${req.protocol}://${req.get("host")}/images/barang/${fileName}`;
-  const qrUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/images/barang/qrcode/${namaFile}`;
+    // deklarasi variabel url diluar scope
+    const url = `${req.protocol}://${req.get(
+      "host"
+    )}/images/barang/${fileName}`;
+    const qrUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/images/barang/qrcode/${qrNameFile}`;
 
-  try {
-    // req.role berasal dari middleware ketika login
-    if (req.role === "admin") {
-      await Barang.update(
-        {
-          kd_brg,
-          nm_brg,
-          spek_brg,
-          jml_brg,
-          kondisi_brg,
-          tgl_buy_brg,
-          harga_brg,
-          image_brg: fileName,
-          url_brg: url,
-          qrcode_brg: namaFile,
-          qrcode_url_brg: qrUrl,
-        },
-        {
-          where: {
-            id: barang.id,
+    try {
+      // req.role berasal dari middleware ketika login
+      if (req.role === "admin") {
+        await Barang.update(
+          {
+            kd_brg,
+            nm_brg,
+            spek_brg,
+            jml_brg,
+            kondisi_brg,
+            tgl_buy_brg,
+            harga_brg,
+            image_brg: fileName,
+            url_brg: url,
+            qrcode_brg: qrNameFile,
+            qrcode_url_brg: qrUrl,
           },
-        }
-      );
-    } else {
-      // jika user id dan barang user id tidak sama
-      if (req.userId !== barang.userId)
-        return res.status(403).json({ msg: "Akses Tidak ditemukan" });
-      // jika kondisi terpenuhi
-      await Barang.update(
-        {
-          kd_brg,
-          nm_brg,
-          spek_brg,
-          jml_brg,
-          kondisi_brg,
-          tgl_buy_brg,
-          harga_brg,
-          image_brg: fileName,
-          url_brg: url,
-          qrcode_brg: namaFile,
-          qrcode_url_brg: qrUrl,
-        },
-        {
-          where: {
-            [Op.and]: [{ id: barang.id }, { userId: req.userId }],
+          {
+            where: {
+              id: barang.id,
+            },
+          }
+        );
+      } else {
+        // jika user id dan barang user id tidak sama
+        if (req.userId !== barang.userId)
+          return res.status(403).json({ msg: "Akses Tidak ditemukan" });
+        // jika kondisi terpenuhi
+        await Barang.update(
+          {
+            kd_brg,
+            nm_brg,
+            spek_brg,
+            jml_brg,
+            kondisi_brg,
+            tgl_buy_brg,
+            harga_brg,
+            image_brg: fileName,
+            url_brg: url,
+            qrcode_brg: qrNameFile,
+            qrcode_url_brg: qrUrl,
           },
-        }
-      );
+          {
+            where: {
+              [Op.and]: [{ id: barang.id }, { userId: req.userId }],
+            },
+          }
+        );
+      }
+      res.status(200).json({ msg: "Barang Berhasil di Update" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
     }
-    res.status(200).json({ msg: "Barang Berhasil di Update" });
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
   }
 };
 
@@ -361,6 +363,7 @@ export const deleteBarang = async (req, res) => {
       // hapus gambar
       const filepath = `./public/images/barang/${barang.image_brg}`;
       const filePathQr = `./public/images/barang/qrcode/${barang.qrcode_brg}`;
+
       fs.unlinkSync(filepath);
       fs.unlinkSync(filePathQr);
       await Barang.destroy({

@@ -58,7 +58,7 @@ export const login = async (req, res) => {
   // membuat http only cookie
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 43200000,
   });
   res.status(200).json({
     status: true,

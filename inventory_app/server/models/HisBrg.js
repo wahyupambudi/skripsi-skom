@@ -1,13 +1,14 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
 import Users from "./UserModel.js";
+import Barangs from "./BrgModel.js";
 
 // destruct datatype
 const { DataTypes } = Sequelize;
 
-// membuat table Barangs
-const Barangs = db.define(
-  "tb_barang",
+// membuat table hisBrg
+const hisBrg = db.define(
+  "tb_his_barang",
   {
     uuid_brg: {
       type: DataTypes.STRING,
@@ -22,7 +23,6 @@ const Barangs = db.define(
     kd_brg: {
       type: DataTypes.STRING,
       allowNull: false,
-      index: true,
       validate: {
         notEmpty: true,
       },
@@ -98,10 +98,15 @@ const Barangs = db.define(
   }
 );
 
-Users.hasMany(Barangs);
-Barangs.belongsTo(Users, { foreignKey: "userId" });
+Users.hasMany(hisBrg);
+hisBrg.belongsTo(Users, { foreignKey: "userId" });
+hisBrg.belongsTo(Barangs, {
+  foreignKey: "kd_brg",
+  targetKey: "kd_brg",
+  onDelete: "CASCADE",
+});
 
-export default Barangs;
+export default hisBrg;
 
 // (async () => {
 //   await db.sync();

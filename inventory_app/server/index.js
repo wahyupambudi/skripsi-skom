@@ -9,6 +9,8 @@ import cookieParser from "cookie-parser";
 // import dari routes
 import UserRoute from "./routes/UserRoute.js";
 import BarangRoute from "./routes/BarangRoute.js";
+import SrvRoute from "./routes/SrvRoute.js";
+import HisRoute from "./routes/HisRoute.js";
 import BhpRoute from "./routes/BhpRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 
@@ -29,7 +31,7 @@ const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({
   db: db,
   checkExpirationInterval: 43200000, // interval hapus dari database setiap 12 jam
-  expiration: 1200000, // waktu session 20 menit
+  expiration: 43200000, // waktu session 20 menit
 });
 
 // membuat table session di database
@@ -50,7 +52,7 @@ app.use(
     cookie: {
       // auto jika menggunakan http/s
       secure: "auto",
-      maxAge: 1200000,
+      maxAge: 43200000,
     },
   })
 );
@@ -70,6 +72,8 @@ app.use(express.static("public"));
 // app use dari router
 app.use(UserRoute);
 app.use(BarangRoute);
+app.use(SrvRoute);
+app.use(HisRoute);
 app.use(BhpRoute);
 app.use(AuthRoute);
 

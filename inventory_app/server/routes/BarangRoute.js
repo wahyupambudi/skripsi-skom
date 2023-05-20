@@ -1,11 +1,8 @@
 import express from "express";
-import {
-  getBarangs,
-  getBarangById,
-  createBarang,
-  updateBarang,
-  deleteBarang,
-} from "../controllers/Barangs.js";
+import { getBarangs, getBarangById } from "../controllers/barang/Barangs.js";
+import { createBarang } from "../controllers/barang/addBarang.js";
+import { updateBarang } from "../controllers/barang/editBarang.js";
+import { deleteBarang } from "../controllers/barang/deleteBarang.js";
 import {
   verifyUser,
   ketuaJurusan,

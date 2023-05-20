@@ -17,7 +17,7 @@ const FormEditUser = () => {
 
   const RefreshToken = async () => {
     try {
-      const response = await axios.get("http://52.199.149.14:2024/token");
+      const response = await axios.get("http://localhost:2023/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
       setExpire(decoded.exp);
@@ -34,7 +34,7 @@ const FormEditUser = () => {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://52.199.149.14:2024/token");
+        const response = await axios.get("http://localhost:2023/token");
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
@@ -53,7 +53,7 @@ const FormEditUser = () => {
     const getUserById = async () => {
       try {
         const response = await axiosJWT.get(
-          `http://52.199.149.14:2024/users/${id}`,
+          `http://localhost:2023/users/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ const FormEditUser = () => {
     e.preventDefault();
     try {
       await axiosJWT.patch(
-        `http://52.199.149.14:2024/users/${id}`,
+        `http://localhost:2023/users/${id}`,
         {
           name: name,
           email: email,
