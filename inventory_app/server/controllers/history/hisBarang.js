@@ -46,7 +46,7 @@ export const getHisBarang = async (req, res) => {
 // membuat fungsi untuk getBarang berdasarkan id/uuid barang
 export const getHisBarangById = async (req, res) => {
   try {
-    const hisBarang = await hisBrg.findOne({
+    const hisBarang = await hisBrg.findAll({
       where: {
         uuid_brg: req.params.id,
       },
@@ -59,7 +59,7 @@ export const getHisBarangById = async (req, res) => {
     // req.role berasal dari middleware ketika login
     // jika user admin menampilkan berdasarkan id barang dari semua user
     if (req.role) {
-      response = await hisBrg.findOne({
+      response = await hisBrg.findAll({
         attributes: [
           "uuid_brg",
           "kd_brg",
@@ -75,7 +75,7 @@ export const getHisBarangById = async (req, res) => {
           "qrcode_url_brg",
         ],
         where: {
-          id: hisBarang.id,
+          kd_brg: req.params.id,
         },
         // memasukkan nama, email dari model User
         include: [
