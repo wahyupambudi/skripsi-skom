@@ -19,10 +19,12 @@ export const getHisSrv = async (req, res) => {
           "nm_brg_srv",
           "spek_brg_srv",
           "srv_list",
+          "lokasi_srv",
           "tgl_mulai",
           "harga_srv",
           "status_srv",
           "tgl_selesai",
+          "updatedAt",
         ],
         // memasukkan nama, email dari model User
         include: [
@@ -63,13 +65,15 @@ export const getHisServiceById = async (req, res) => {
           "nm_brg_srv",
           "spek_brg_srv",
           "srv_list",
+          "lokasi_srv",
           "tgl_mulai",
           "harga_srv",
           "status_srv",
           "tgl_selesai",
+          "updatedAt",
         ],
         where: {
-          kd_brg_srv: req.params.id,
+          uuid_brg_srv: req.params.id,
         },
         // memasukkan nama, email dari model User
         include: [

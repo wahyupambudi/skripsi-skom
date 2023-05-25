@@ -21,7 +21,7 @@ export const addSrv = async (req, res) => {
     let new_kd_brg_srv = getSrvAll[i].kd_brg_srv;
     // jika kd_brg_srv sama
     if (new_kd_brg_srv === kd_brg_srv)
-      return res.status(500).json({ msg: "Kode Service Tidak Boleh sama" });
+      return res.status(500).json({ msg: "Barang sudah di proses service" });
   }
   // proses create barang
   try {

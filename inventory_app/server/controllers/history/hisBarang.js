@@ -27,6 +27,7 @@ export const getHisBarang = async (req, res) => {
           "url_brg",
           "qrcode_brg",
           "qrcode_url_brg",
+          "updatedAt",
         ],
         // memasukkan nama, email dari model User
         include: [
@@ -73,9 +74,10 @@ export const getHisBarangById = async (req, res) => {
           "url_brg",
           "qrcode_brg",
           "qrcode_url_brg",
+          "updatedAt",
         ],
         where: {
-          kd_brg: req.params.id,
+          uuid_brg: req.params.id,
         },
         // memasukkan nama, email dari model User
         include: [

@@ -33,7 +33,7 @@ export const createBarang = async (req, res) => {
     return res.status(400).json({ msg: "Tidak ada file yang di upload" });
 
   // membuat variabel untuk menampung data gambar
-  const file = req.files.image;
+  const file = req.files.file;
   const fileSize = file.data.length;
   const ext = path.extname(file.name);
   const fileName = Date.now() + "-" + file.md5 + ext;
