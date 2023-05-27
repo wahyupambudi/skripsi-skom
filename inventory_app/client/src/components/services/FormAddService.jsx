@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const FormAddService = () => {
   const [kd_brg, setKdbrg] = useState("");
@@ -15,6 +17,7 @@ const FormAddService = () => {
   // const [file, setFile] = useState("");
   // const [preview, setPreview] = useState("");
   const [msg, setMsg] = useState("");
+  const [pesan, setPesan] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -69,11 +72,15 @@ const FormAddService = () => {
       });
       navigate("/services");
     } catch (error) {
-      if (error.response) {
+      if (error.response.data.msg === "Barang sudah di proses service") {
         setMsg(error.response.data.msg);
+        alert("Gagal Service Barang.");
+        alert("Barang sudah di Service.");
+      } else if (error.response.data.pesan === "Akses Tidak Di izinkan") {
+        setPesan(error.response.data.pesan);
+        // console.log(error.response.data.pesan);
+        alert(error.response.data.pesan);
       }
-      alert("Gagal Service Barang.");
-      alert("Barang sudah di Service.");
       navigate("/services");
     }
   };
@@ -118,6 +125,9 @@ const FormAddService = () => {
 
           <div className="card-content">
             <form onSubmit={saveProduct}>
+              <p className="has-text-centered has-background-danger has-text-white is-size-5">
+                {pesan}
+              </p>
               <p className="has-text-centered has-background-danger has-text-white is-size-5">
                 {msg}
               </p>
@@ -193,12 +203,26 @@ const FormAddService = () => {
                 <div className="field-body">
                   <div className="field">
                     <p className="control is-expanded has-icons-left">
-                      <textarea
+                      <CKEditor
+                        editor={ClassicEditor}
+                        value={srv_list}
+                        data={srv_list}
+                        onReady={(editor) => {
+                          // You can store the "editor" and use when it is needed.
+                          // console.log("Editor is ready to use!", editor);
+                        }}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setSrvlist(editor.getData());
+                          // console.log({ event, editor, data });
+                        }}
+                      />
+                      {/* <textarea
                         className="textarea"
                         value={srv_list}
                         onChange={(e) => setSrvlist(e.target.value)}
                         required
-                      ></textarea>
+                      ></textarea> */}
                     </p>
                   </div>
                 </div>

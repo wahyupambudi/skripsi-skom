@@ -3,28 +3,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-
-// import jQuery from "jquery";
-// import DataTable from "datatables.net-bm";
-// import "datatables.net-autofill-bm";
-// import "datatables.net-buttons-bm";
-// import "datatables.net-colreorder-bm";
-// import DateTime from "datatables.net-datetime";
-// import "datatables.net-fixedcolumns-bm";
-// import "datatables.net-fixedheader-bm";
-// import "datatables.net-keytable-bm";
-// import "datatables.net-responsive-bm";
-// import "datatables.net-rowgroup-bm";
-// import "datatables.net-rowreorder-bm";
-// // import "datatables.net-scroller-bm";
-// import "datatables.net-searchbuilder-bm";
-// import "datatables.net-searchpanes-bm";
-// import "datatables.net-select-bm";
-// import "datatables.net-staterestore-bm";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  // const [msg, setMsg] = useState("");
+  const { user } = useSelector((state) => state.auth);
   const [barangs, setProducts] = useState([]);
 
   useEffect(() => {
@@ -78,10 +63,16 @@ const ProductList = () => {
   }
 
   const deleteProduct = async (productId) => {
-    if (ConfirmDelete()) {
-      await axios.delete(`http://localhost:2023/barangs/${productId}`);
-    } else {
-      getProducts();
+    try {
+      if (ConfirmDelete()) {
+        await axios.delete(`http://localhost:2023/barangs/${productId}`);
+      } else {
+        getProducts();
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.msg);
+      }
     }
     getProducts();
   };
@@ -95,15 +86,16 @@ const ProductList = () => {
         crossorigin="anonymous"
       ></link> */}
 
+      {/* <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"
+      ></script> */}
+
       <link
         rel="stylesheet"
         href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
       />
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"
-      ></script>
 
       <h1 className="title">Products</h1>
       <h2 className="subtitle">List of Products</h2>
@@ -140,7 +132,7 @@ const ProductList = () => {
           <div className="card-content">
             <div className="b-table has-pagination is-size-7">
               <div className="table-wrapper has-mobile-cards">
-                <table className="table is-fullwidth is-striped is-hoverable ">
+                <table className="table is-fullwidth is-striped is-hoverable is-fullwidth ">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -152,27 +144,27 @@ const ProductList = () => {
                       <th>Tanggal</th>
                       <th>Harga</th>
                       <th>Aksi</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {barangs.map((product, index) => (
                       <tr key={product.uuid_brg}>
-                        <td>{index + 1}</td>
-                        <td>{product.kd_brg}</td>
-                        <td>{product.nm_brg}</td>
+                        <td data-label="No">{index + 1}</td>
+                        <td data-label="Kode Barang">{product.kd_brg}</td>
+                        <td data-label="Nama Barang">{product.nm_brg}</td>
                         <td
+                          data-label="Spesifikasi"
                           dangerouslySetInnerHTML={{
                             __html: product.spek_brg,
                           }}
                         ></td>
                         {/* <td>{product.spek_brg}</td> */}
-                        <td>{product.kondisi_brg}</td>
-                        <td>{product.lokasi_brg}</td>
-                        <td>
+                        <td data-label="Kondisi">{product.kondisi_brg}</td>
+                        <td data-label="Lokasi Barang">{product.lokasi_brg}</td>
+                        <td data-label="Tanggal perolehan">
                           {new Date(product.tgl_buy_brg).toLocaleDateString()}
                         </td>
-                        <td>
+                        <td data-label="Harga Barang">
                           Rp.{" "}
                           {new Intl.NumberFormat("id").format(
                             product.harga_brg
@@ -190,49 +182,65 @@ const ProductList = () => {
                     />
                   </a>
                 </td> */}
-                        <td>
-                          <Link
-                            to={`/products/edit/${product.uuid_brg}`}
-                            className="button is-small is-warning"
-                            title="Edit Data"
-                          >
-                            <span className="icon is-small">
-                              <i className="mdi mdi-24px mdi-pencil"></i>
-                            </span>
-                          </Link>
-                          <span className="ml-1"></span>
-                          <Link
-                            to={`/products/detail/${product.uuid_brg}`}
-                            className="button is-small is-info"
-                            title="Detail Data"
-                          >
-                            <span className="icon is-small">
-                              <i className="mdi mdi-24px mdi-magnify"></i>
-                            </span>
-                          </Link>
-                          <span className="ml-1"></span>
+                        {user && user.user.role !== "ketuajurusan" && (
+                          <td>
+                            <Link
+                              to={`/products/edit/${product.uuid_brg}`}
+                              className="button is-small is-warning"
+                              title="Edit Data"
+                            >
+                              <span className="icon is-small">
+                                <i className="mdi mdi-24px mdi-pencil"></i>
+                              </span>
+                            </Link>
+                            <span className="ml-1"></span>
+                            <Link
+                              to={`/products/detail/${product.uuid_brg}`}
+                              className="button is-small is-info"
+                              title="Detail Data"
+                            >
+                              <span className="icon is-small">
+                                <i className="mdi mdi-24px mdi-magnify"></i>
+                              </span>
+                            </Link>
+                            <span className="ml-1"></span>
 
-                          <Link
-                            to={`/services/add/${product.uuid_brg}`}
-                            className="button is-small is-success"
-                            title="Service Barang"
-                          >
-                            <span className="icon is-small">
-                              <i className="mdi mdi-24px mdi-wrench"></i>
-                            </span>
-                          </Link>
-                          <span className="ml-1"></span>
+                            <Link
+                              to={`/services/add/${product.uuid_brg}`}
+                              className="button is-small is-success"
+                              title="Service Barang"
+                            >
+                              <span className="icon is-small">
+                                <i className="mdi mdi-24px mdi-wrench"></i>
+                              </span>
+                            </Link>
+                            <span className="ml-1"></span>
 
-                          <button
-                            onClick={() => deleteProduct(product.uuid_brg)}
-                            className="button is-small is-danger"
-                            title="Hapus Data"
-                          >
-                            <span className="icon is-small">
-                              <i className="mdi mdi-24px mdi-delete"></i>
-                            </span>
-                          </button>
-                        </td>
+                            <button
+                              onClick={() => deleteProduct(product.uuid_brg)}
+                              className="button is-small is-danger"
+                              title="Hapus Data"
+                            >
+                              <span className="icon is-small">
+                                <i className="mdi mdi-24px mdi-delete"></i>
+                              </span>
+                            </button>
+                          </td>
+                        )}
+                        {user && user.user.role === "ketuajurusan" && (
+                          <td>
+                            <span className="ml-1"></span>
+                            <Link
+                              to={`/products/detail/${product.uuid_brg}`}
+                              className="button is-small is-info"
+                              title="Detail Data"
+                            >
+                              <span className="icon is-small">
+                                <i className="mdi mdi-24px mdi-magnify"></i>
+                              </span>
+                            </Link>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>

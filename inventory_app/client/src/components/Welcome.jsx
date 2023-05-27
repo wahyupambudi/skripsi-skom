@@ -26,7 +26,6 @@ const Welcome = () => {
           <div className="level-left">
             <div className="level-item">
               <ul>
-                <li>Admin</li>
                 <li>Dashboard</li>
               </ul>
             </div>
@@ -35,7 +34,7 @@ const Welcome = () => {
             <div className="level-item">
               <div className="buttons is-right">
                 <a
-                  href="https://github.com/vikdiesel/admin-one-bulma-dashboard"
+                  href="https://github.com/wahyupambudi"
                   target="_blank"
                   className="button is-primary"
                 >
@@ -54,17 +53,7 @@ const Welcome = () => {
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">Dashboard</h1>
-              </div>
-            </div>
-          </div>
-          <div className="level">
-            <div className="level-left">
-              <div className="level-item">
-                <h2 className="subtitle">
-                  Welcome Back{" "}
-                  {/* <strong>{user.user.role + " " + user.user.name}</strong> */}
-                </h2>
+                <h1 className="title">Selamat Datang di Aplikasi Inventaris</h1>
               </div>
             </div>
           </div>

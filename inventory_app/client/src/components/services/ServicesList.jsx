@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 const ServicesList = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  // const [msg, setMsg] = useState("");
   const [barangs, setProducts] = useState([]);
 
   useEffect(() => {
@@ -60,19 +61,24 @@ const ServicesList = () => {
   }
 
   const deleteProduct = async (productId) => {
-    if (ConfirmDelete()) {
-      await axios.delete(`http://localhost:2023/srv/${productId}`);
-    } else {
-      getProducts();
+    try {
+      if (ConfirmDelete()) {
+        await axios.delete(`http://localhost:2023/srv/${productId}`);
+      } else {
+        getProducts();
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.msg);
+      }
     }
+    // if (ConfirmDelete()) {
+    //   await axios.delete(`http://localhost:2023/srv/${productId}`);
+    // } else {
+    //   alert("Asdasd");
+    // }
     getProducts();
   };
-
-  function anuinDate() {
-    if (new Date(product.tgl_selesai).toLocaleDateString() == "Invalid Date") {
-      console.log("ninuninu");
-    }
-  }
 
   return (
     <div>
@@ -93,14 +99,9 @@ const ServicesList = () => {
         crossorigin="anonymous"
       ></script>
 
-      <h1 className="title">Products</h1>
-      <h2 className="subtitle">List of Products</h2>
+      <h1 className="title">Barang Service</h1>
+      <h2 className="subtitle">Data Service Barang</h2>
       <div className="field is-grouped">
-        <div className="control">
-          <Link to="/services/add" className="button is-primary mb-2">
-            Tambah Data
-          </Link>
-        </div>
         <div className="control">
           <Link
             to="/services/add"
@@ -148,30 +149,33 @@ const ServicesList = () => {
                   <tbody>
                     {barangs.map((product, index) => (
                       <tr key={product.uuid_brg_srv}>
-                        <td>{index + 1}</td>
-                        <td>{product.kd_brg_srv}</td>
-                        <td>{product.nm_brg_srv}</td>
+                        <td data-label="Nomor">{index + 1}</td>
+                        <td data-label="Kode Barang">{product.kd_brg_srv}</td>
+                        <td data-label="Nama Barang">{product.nm_brg_srv}</td>
                         {/* <td>{product.spek_brg_srv}</td> */}
 
                         <td
+                          data-label="List Service"
                           dangerouslySetInnerHTML={{
                             __html: product.srv_list,
                           }}
                         ></td>
 
-                        <td>{product.lokasi_srv}</td>
-                        <td>
+                        <td data-label="Lokasi Service">
+                          {product.lokasi_srv}
+                        </td>
+                        <td data-label="Tanggal Mulai">
                           {/* {new Date(product.tgl_mulai).toLocaleDateString()} */}
                           {product.tgl_mulai}
                         </td>
-                        <td>
+                        <td data-label="Harga">
                           Rp.{" "}
                           {new Intl.NumberFormat("id").format(
                             product.harga_srv
                           )}
                         </td>
-                        <td>{product.status_srv}</td>
-                        <td>
+                        <td data-label="Status">{product.status_srv}</td>
+                        <td data-label="Tanggal Selesai">
                           {/* {new Date(product.tgl_selesai).toLocaleDateString()} */}
                           {product.tgl_selesai}
                         </td>

@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/srv", verifyUser, getSrv);
 router.get("/srv/:id", verifyUser, getServiceById);
-router.post("/srv", verifyUser, addSrv);
+router.post("/srv", verifyUser, ketuaJurusan, addSrv);
 router.patch(
   "/srv/:id",
   verifyUser,

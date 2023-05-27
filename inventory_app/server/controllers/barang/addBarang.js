@@ -50,11 +50,14 @@ export const createBarang = async (req, res) => {
   file.mv(`./public/images/barang/${fileName}`, async (err) => {
     if (err) return res.status(500).json({ msg: err.message });
 
+    let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
+    // console.log(newSpesifikasi);
+
     // membuat qrcode dari data yang sudah di inputkan
     let data = {
       "Kode Barang": kd_brg,
       "Nama Barang": nm_brg,
-      "Spesifikasi Barang": spek_brg,
+      "Spesifikasi Barang": newSpesifikasi,
       "Kondisi Barang": kondisi_brg,
       "Lokasi Barang": lokasi_brg,
       "Tanggal Masuk": tgl_buy_brg,

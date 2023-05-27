@@ -58,6 +58,6 @@ export const ketuaJurusan = async (req, res, next) => {
   if (!user) return res.status(404).json({ msg: "User Tidak ditemukan" });
   // jika user adalah ketuaJurusan
   if (user.role === "ketuajurusan")
-    return res.status(403).json({ msg: "Akses Tidak Di izinkan" });
+    return res.status(403).json({ pesan: "Akses Tidak Di izinkan" });
   next();
 };

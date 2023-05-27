@@ -75,9 +75,6 @@ const FormEditService = () => {
       if (error.response) {
         setMsg(error.response.data.msg);
       }
-      alert("Gagal Service Barang.");
-      alert("Barang sudah di Service.");
-      navigate("/services");
     }
   };
 

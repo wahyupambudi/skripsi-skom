@@ -35,13 +35,16 @@ export const updateBarang = async (req, res) => {
   // check jika gambar null maka langsung update data selain image
   if (req.files === null) {
     fileName = barang.image_brg;
-    console.log(fileName);
+    // console.log(fileName);
+
+    let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
+    // console.log(newSpesifikasi);
 
     // membuat qrcode dari data yang sudah di inputkan
     let data = {
       "Kode Barang": kd_brg,
       "Nama Barang": nm_brg,
-      "Spesifikasi Barang": spek_brg,
+      "Spesifikasi Barang": newSpesifikasi,
       "Kondisi Barang": kondisi_brg,
       "Lokasi Barang": lokasi_brg,
       "Tanggal Masuk": tgl_buy_brg,

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
+// import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
 
@@ -17,7 +17,93 @@ const Sidebar = () => {
 
   return (
     <div>
-      <aside className="menu pl-2 has-shadow">
+      <aside className="aside is-placed-left is-expanded">
+        <div className="aside-tools">
+          <div className="aside-tools-label">
+            <span>
+              <b>Inventory App</b>
+            </span>
+          </div>
+        </div>
+        <div className="menu is-menu-main">
+          <p className="menu-label">General</p>
+          <ul className="menu-list">
+            <li>
+              <NavLink to={"/dashboard"}>
+                <span className="icon">
+                  <i className="mdi mdi-home"></i>
+                </span>
+                <span className="menu-item-label">Dashboard</span>
+              </NavLink>
+            </li>
+          </ul>
+          <p className="menu-label">Data Inventaris</p>
+          <ul className="menu-list">
+            <li>
+              <NavLink to={"/products"}>
+                <span className="icon ">
+                  <i className="mdi mdi-table"></i>
+                </span>
+                <span className="menu-item-label">Data Barang</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/bhp"}>
+                <span className="icon ">
+                  <i className="mdi mdi-table"></i>
+                </span>
+                <span className="menu-item-label">Barang Habis Pakai</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/services"}>
+                <span className="icon ">
+                  <i className="mdi mdi-table"></i>
+                </span>
+                <span className="menu-item-label">Data Service</span>
+              </NavLink>
+            </li>
+          </ul>
+          <p className="menu-label">Data User</p>
+          <ul className="menu-list">
+            <li>
+              <NavLink to={"/users"}>
+                <span className="icon ">
+                  <i className="mdi mdi-account"></i>
+                </span>
+                <span className="menu-item-label">Data User</span>
+              </NavLink>
+            </li>
+          </ul>
+          <p className="menu-label">About</p>
+          <ul className="menu-list">
+            <li>
+              <a
+                href="https://github.com/vikdiesel/admin-one-bulma-dashboard"
+                target="_blank"
+                className="has-icon"
+              >
+                <span className="icon">
+                  <i className="mdi mdi-github-circle"></i>
+                </span>
+                <span className="menu-item-label">GitHub</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://justboil.me/bulma-admin-template/free-html-dashboard/"
+                className="has-icon"
+              >
+                <span className="icon">
+                  <i className="mdi mdi-help-circle"></i>
+                </span>
+                <span className="menu-item-label">About</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      {/* <aside className="menu pl-2 has-shadow">
         <p className="menu-label">General</p>
         <ul className="menu-list">
           <li>
@@ -57,7 +143,7 @@ const Sidebar = () => {
             </button>
           </li>
         </ul>
-      </aside>
+      </aside> */}
     </div>
   );
 };

@@ -47,6 +47,16 @@ const FormDetailService = () => {
 
   return (
     <div>
+      <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css?family=Nunito"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
+      />
       <h2 className="title is-4">Detail Barang {nm_brg}</h2>
       <div className="field is-grouped">
         <div className="control">
@@ -80,7 +90,11 @@ const FormDetailService = () => {
                       <tr>
                         <td>{kd_brg}</td>
                         <td>{nm_brg}</td>
-                        <td>{spek_brg}</td>
+                        <td
+                          dangerouslySetInnerHTML={{
+                            __html: spek_brg,
+                          }}
+                        ></td>
                         <td
                           dangerouslySetInnerHTML={{
                             __html: srv_list,
@@ -127,7 +141,11 @@ const FormDetailService = () => {
                         <tr key={product.uuid_brg}>
                           <td>{product.kd_brg_srv}</td>
                           <td>{product.nm_brg_srv}</td>
-                          <td>{product.spek_brg_srv}</td>
+                          <td
+                            dangerouslySetInnerHTML={{
+                              __html: product.spek_brg_srv,
+                            }}
+                          ></td>
                           <td
                             dangerouslySetInnerHTML={{
                               __html: product.srv_list,

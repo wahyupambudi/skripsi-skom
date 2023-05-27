@@ -55,58 +55,99 @@ const Userlist = () => {
     setUsers(response.data.response);
   };
 
+  function ConfirmDelete() {
+    return confirm("Hapus Data Ini?");
+  }
+
   const deleteUser = async (userId) => {
-    RefreshToken();
-    await axiosJWT.delete(`http://localhost:2023/users/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      if (ConfirmDelete()) {
+        await axios.delete(`http://localhost:2023/users/${userId}`);
+      } else {
+        getUsers();
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.msg);
+      }
+    }
     getUsers();
   };
 
   return (
     <div>
+      <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css?family=Nunito"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
+      />
       <h1 className="title">Users</h1>
       <h2 className="subtitle">Welcome Admin </h2>
       <Link to="/users/add" className="button is-primary mb-2">
-        Add New
+        Tambah User
       </Link>
-      <table className="table is-striped is-fullwidth">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.uuid}>
-              <td>{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
-              <td>
-                <Link
-                  to={`/users/edit/${user.uuid}`}
-                  className="button is-small is-info"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => deleteUser(user.uuid)}
-                  className="button is-small is-danger"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <br />
+      <div className="card has-table">
+        <header className="card-header">
+          <p className="card-header-title">
+            <span className="icon">
+              <i className="mdi mdi-table"></i>
+            </span>
+            Data User
+          </p>
+          <a href="#" className="card-header-icon">
+            <span className="icon">
+              <i className="mdi mdi-reload"></i>
+            </span>
+          </a>
+        </header>
+        <div className="card-content">
+          <div className="b-table has-pagination ">
+            <div className="table-wrapper has-mobile-cards">
+              <table className="table is-fullwidth is-striped is-hoverable is-fullwidth ">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user, index) => (
+                    <tr key={user.uuid}>
+                      <td data-label="No">{index + 1}</td>
+                      <td data-label="Nama">{user.name}</td>
+                      <td data-label="Email">{user.email}</td>
+                      <td data-label="Role User">{user.role}</td>
+                      <td>
+                        <Link
+                          to={`/users/edit/${user.uuid_user}`}
+                          className="button is-small is-info"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => deleteUser(user.uuid_user)}
+                          className="button is-small is-danger"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
