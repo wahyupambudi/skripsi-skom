@@ -1,8 +1,9 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../logo.png";
+// import logo from "../logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
+// import "./nav.js";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -15,144 +16,31 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const [isActive, setisActive] = React.useState(false);
+
   return (
     <div>
-      {/* nav */}
-      {/* <nav id="navbar-main" class="navbar is-fixed-top">
-        <div class="navbar-brand">
-          <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
-            <span class="icon">
-              <i class="mdi mdi-forwardburger mdi-24px"></i>
-            </span>
-          </a>
-        </div>
-        <div class="navbar-brand is-right">
-          <a
-            class="navbar-item is-hidden-desktop jb-navbar-menu-toggle"
-            data-target="navbar-menu"
-          >
-            <span class="icon">
-              <i class="mdi mdi-dots-vertical"></i>
-            </span>
-          </a>
-        </div>
-        <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
-          <div class="navbar-end">
-            <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider is-hoverable">
-              <a class="navbar-link is-arrowless">
-                <span class="icon">
-                  <i class="mdi mdi-menu"></i>
-                </span>
-                <span>Sample Menu</span>
-                <span class="icon">
-                  <i class="mdi mdi-chevron-down"></i>
-                </span>
-              </a>
-              <div class="navbar-dropdown">
-                <a href="profile.html" class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-account"></i>
-                  </span>
-                  <span>My Profile</span>
-                </a>
-                <a class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-settings"></i>
-                  </span>
-                  <span>Settings</span>
-                </a>
-                <a class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-email"></i>
-                  </span>
-                  <span>Messages</span>
-                </a>
-                <hr class="navbar-divider" />
-                <a class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-logout"></i>
-                  </span>
-                  <span>Log Out</span>
-                </a>
-              </div>
-            </div>
-            <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
-              <a class="navbar-link is-arrowless">
-                <div class="is-user-avatar">
-                  <img
-                    src="https://avatars.dicebear.com/v2/initials/john-doe.svg"
-                    alt="John Doe"
-                  />
-                </div>
-                <div class="is-user-name">
-                  <span>John Doe</span>
-                </div>
-                <span class="icon">
-                  <i class="mdi mdi-chevron-down"></i>
-                </span>
-              </a>
-              <div class="navbar-dropdown">
-                <a href="profile.html" class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-account"></i>
-                  </span>
-                  <span>My Profile</span>
-                </a>
-                <a class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-settings"></i>
-                  </span>
-                  <span>Settings</span>
-                </a>
-                <a class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-email"></i>
-                  </span>
-                  <span>Messages</span>
-                </a>
-                <hr class="navbar-divider" />
-                <a class="navbar-item">
-                  <span class="icon">
-                    <i class="mdi mdi-logout"></i>
-                  </span>
-                  <span>Log Out</span>
-                </a>
-              </div>
-            </div>
-            <a
-              href="https://justboil.me/bulma-admin-template/free-html-dashboard/"
-              title="About"
-              class="navbar-item has-divider is-desktop-icon-only"
-            >
-              <span class="icon">
-                <i class="mdi mdi-help-circle-outline"></i>
-              </span>
-              <span>About</span>
-            </a>
-            <a title="Log out" class="navbar-item is-desktop-icon-only">
-              <span class="icon">
-                <i class="mdi mdi-logout"></i>
-              </span>
-              <span>Log out</span>
-            </a>
-          </div>
-        </div>
-      </nav> */}
-
       <nav
-        className="navbar is-fixed-top has-shadow"
+        className="navbar navbar is-fixed-top has-shadow"
         role="navigation"
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <NavLink to="/dashboard" className="navbar-item">
-            <img src={logo} width="112" height="28" alt="logo" />
-          </NavLink>
+          <a href="/" className="navbar-item">
+            <img
+              src="https://bulma.io/images/bulma-logo.png"
+              alt="Logo"
+              width="112"
+              height="28"
+            />
+          </a>
 
           <a
-            href="!#"
+            onClick={() => {
+              setisActive(!isActive);
+            }}
             role="button"
-            className="navbar-burger burger"
+            className={`navbar-burger burger ${isActive ? "is-active" : ""}`}
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -162,12 +50,61 @@ const Navbar = () => {
             <span aria-hidden="true"></span>
           </a>
         </div>
-
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div
+          id="navbarBasicExample"
+          className={`navbar-menu ${isActive ? "is-active" : ""}`}
+        >
+          <div className="navbar-start">
+            <div className="navbar-item">
+              <NavLink to={"/dashboard"}>
+                <span className="navbar-item">Dashboard</span>
+              </NavLink>
+              {user && user.user.role === "admin" && (
+                <NavLink to={"/users"}>
+                  <span className="navbar-item">Data User</span>
+                </NavLink>
+              )}
+              <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider is-hoverable">
+                <a className="navbar-link is-arrowless">
+                  <span>Data Inventaris</span>
+                  <span className="icon">
+                    <i className="mdi mdi-chevron-down"></i>
+                  </span>
+                </a>
+                <div className="navbar-dropdown">
+                  <NavLink to={"/products"}>
+                    <span className="navbar-item">
+                      <span className="icon ">
+                        <i className="mdi mdi-table"></i>
+                      </span>
+                      Data Barang
+                    </span>
+                  </NavLink>
+                  <NavLink to={"/bhp"}>
+                    <span className="navbar-item">
+                      <span className="icon ">
+                        <i className="mdi mdi-table"></i>
+                      </span>
+                      Data Barang Habis Pakai
+                    </span>
+                  </NavLink>
+                  <NavLink to={"/services"}>
+                    <span className="navbar-item">
+                      <span className="icon ">
+                        <i className="mdi mdi-settings"></i>
+                      </span>
+                      Data Service
+                    </span>
+                  </NavLink>
+                  <hr className="navbar-divider" />
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button onClick={logout} className="button is-light">
+                <button onClick={logout} className="button is-danger">
                   Log out
                 </button>
               </div>

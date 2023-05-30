@@ -1,30 +1,28 @@
-import Barang from "../../models/BrgModel.js";
-// import HisBarang from "../../models/HisBrg.js";
-// import User from "../../models/UserModel.js";
-// import { Op } from "sequelize";
+import Bhp from "../../models/BhpModel.js";
 import path from "path";
 // import fs from "fs";
 import qrcode from "qrcode";
 
-export const createBarang = async (req, res) => {
+export const addBhp = async (req, res) => {
   // mendapatkan data input dari form
   const {
-    kd_brg,
-    nm_brg,
-    spek_brg,
-    kondisi_brg,
-    lokasi_brg,
-    tgl_buy_brg,
-    harga_brg,
+    kd_bhp,
+    nm_bhp,
+    spek_bhp,
+    jml_bhp,
+    kondisi_bhp,
+    lokasi_bhp,
+    tgl_buy_bhp,
+    harga_bhp,
   } = req.body;
 
   // mendapatkan semua kode barang
-  const getBarangAll = await Barang.findAll();
+  const getBarangAll = await Bhp.findAll();
   for (let i = 0; i < getBarangAll.length; i++) {
-    // console.log(getBarangAll[i].kd_brg);
-    let new_kd_brg = getBarangAll[i].kd_brg;
-    // jika kd_brg sama
-    if (new_kd_brg === kd_brg)
+    // console.log(getBarangAll[i].kd_bhp);
+    let new_kd_bhp = getBarangAll[i].kd_bhp;
+    // jika kd_bhp sama
+    if (new_kd_bhp === kd_bhp)
       return res.status(500).json({ msg: "Kode Barang Tidak Boleh sama" });
   }
 
@@ -37,7 +35,7 @@ export const createBarang = async (req, res) => {
   const fileSize = file.data.length;
   const ext = path.extname(file.name);
   const fileName = Date.now() + "-" + file.md5 + ext;
-  const url = `${req.protocol}://${req.get("host")}/images/barang/${fileName}`;
+  const url = `${req.protocol}://${req.get("host")}/images/bhp/${fileName}`;
   const allowedType = [".png", ".jpg", ".jpeg"];
 
   // membuat kondisi jika variabel allowedType dan jika fileSize
@@ -47,20 +45,22 @@ export const createBarang = async (req, res) => {
     return res.status(422).json({ msg: "Ukuran gambar harus dibawah 5MB" });
 
   // jika kondisi benar maka akan melakukan proses simpan data
-  file.mv(`./public/images/barang/${fileName}`, async (err) => {
+  file.mv(`./public/images/bhp/${fileName}`, async (err) => {
     if (err) return res.status(500).json({ msg: err.message });
 
-    let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
-    let newTglMasuk = new Date(tgl_buy_brg).toLocaleDateString();
-    let newHarga = new Intl.NumberFormat("id").format(harga_brg);
+    let newSpesifikasi = spek_bhp.replace(/<[^>]+>/g, " ");
+    let newTglMasuk = new Date(tgl_buy_bhp).toLocaleDateString();
+    let newHarga = new Intl.NumberFormat("id").format(harga_bhp);
+    // console.log(newHarga);
 
     // membuat qrcode dari data yang sudah di inputkan
     let data = {
-      "Kode Barang \t\t\t\t": `${kd_brg}`,
-      "Nama Barang \t\t\t": `${nm_brg}`,
+      "Kode Barang \t\t\t\t": `${kd_bhp}`,
+      "Nama Barang \t\t\t": `${nm_bhp}`,
       "Spesifikasi Barang \t": `${newSpesifikasi}`,
-      "Kondisi Barang \t\t\t": `${kondisi_brg}`,
-      "Lokasi Barang \t\t\t": `${lokasi_brg}`,
+      "Jumlah Barang \t\t\t": `${jml_bhp}`,
+      "Kondisi Barang \t\t\t": `${kondisi_bhp}`,
+      "Lokasi Barang \t\t\t": `${lokasi_bhp}`,
       "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
       "Harga Barang \t\t\t": `Rp. ${newHarga}`,
     };
@@ -71,12 +71,12 @@ export const createBarang = async (req, res) => {
       text += `${x}: ${data[x]}\n`;
     }
     // masukkan data di variabel finalText
-    let finalText = `Data Barang \n\n${text}`;
+    let finalText = `Data Barang Habis Pakai \n\n${text}`;
 
-    const qrNameFile = Date.now() + "-" + nm_brg + ext;
+    const qrNameFile = Date.now() + "-" + nm_bhp + ext;
 
     qrcode.toFile(
-      `./public/images/barang/qrcode/${qrNameFile}`,
+      `./public/images/bhp/qrcode/${qrNameFile}`,
       finalText,
       function (err) {
         if (err) throw err;
@@ -86,22 +86,23 @@ export const createBarang = async (req, res) => {
 
     const qrUrl = `${req.protocol}://${req.get(
       "host"
-    )}/images/barang/qrcode/${qrNameFile}`;
+    )}/images/bhp/qrcode/${qrNameFile}`;
 
     // proses create barang
     try {
-      await Barang.create({
-        kd_brg: kd_brg,
-        nm_brg: nm_brg,
-        spek_brg: spek_brg,
-        kondisi_brg: kondisi_brg,
-        lokasi_brg: lokasi_brg,
-        tgl_buy_brg: tgl_buy_brg,
-        harga_brg: harga_brg,
-        image_brg: fileName,
-        url_brg: url,
-        qrcode_brg: qrNameFile,
-        qrcode_url_brg: qrUrl,
+      await Bhp.create({
+        kd_bhp: kd_bhp,
+        nm_bhp: nm_bhp,
+        spek_bhp: spek_bhp,
+        jml_bhp: jml_bhp,
+        kondisi_bhp: kondisi_bhp,
+        lokasi_bhp: lokasi_bhp,
+        tgl_buy_bhp: tgl_buy_bhp,
+        harga_bhp: harga_bhp,
+        image_bhp: fileName,
+        url_bhp: url,
+        qrcode_bhp: qrNameFile,
+        qrcode_url_bhp: qrUrl,
         userId: req.userId,
       });
       res.status(201).json({ msg: "Data Barang Berhasil di Simpan." });

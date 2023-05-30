@@ -5,7 +5,7 @@ import { store } from "./app/store";
 import App from "./App";
 import "bulma/css/bulma.css";
 import "./css/main.min.css";
-import "./css/main.min.js";
+// import "./css/main.min.js";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;

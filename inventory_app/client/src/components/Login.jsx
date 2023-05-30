@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset } from "../features/authSlice";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,12 +25,17 @@ const Login = () => {
     dispatch(LoginUser({ email, password }));
   };
 
+  const mystyle = {
+    paddingRight: "14rem",
+    marginTop: "-3.4rem",
+  };
+
   return (
-    <div>
+    <div id="login">
       <section
         id="loggin"
-        className="hero is-fullheight is-fullwidth"
-        style={{ "padding-right": "14rem" }}
+        className="hero is-fullheight is-fullwidth "
+        style={mystyle}
       >
         <div className="hero-body">
           <div className="container">

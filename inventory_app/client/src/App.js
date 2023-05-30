@@ -12,6 +12,10 @@ import AddService from "./pages/services/AddService";
 import EditService from "./pages/services/EditService";
 import DetailBrg from "./pages/DetailBrg";
 import DetailService from "./pages/services/DetailService";
+import Bhp from "./pages/bhp/Bhp";
+import AddBhp from "./pages/bhp/AddBhp";
+import EditBhp from "./pages/bhp/EditBhp";
+import DetailBhp from "./pages/bhp/DetailBhp";
 
 function App() {
   return (
@@ -27,11 +31,15 @@ function App() {
           <Route path="/products/add" element={<AddProduct />} />
           <Route path="/products/edit/:id" element={<EditProduct />} />
           <Route path="/products/detail/:id" element={<DetailBrg />} />
-          <Route path="/services/detail/:id" element={<DetailService />} />
           <Route path="/services" element={<ServicesProducts />} />
           <Route path="/services/add" element={<AddService />} />
           <Route path="/services/add/:id" element={<AddService />} />
           <Route path="/services/edit/:id" element={<EditService />} />
+          <Route path="/services/detail/:id" element={<DetailService />} />
+          <Route path="/bhp" element={<Bhp />} />
+          <Route path="/bhp/add" element={<AddBhp />} />
+          <Route path="/bhp/edit/:id" element={<EditBhp />} />
+          <Route path="/bhp/detail/:id" element={<DetailBhp />} />
         </Routes>
       </BrowserRouter>
     </div>

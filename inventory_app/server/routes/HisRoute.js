@@ -7,6 +7,7 @@ import {
   getHisSrv,
   getHisServiceById,
 } from "../controllers/history/hisService.js";
+import { getHisBhp, getHisBhpById } from "../controllers/history/hisBhp.js";
 import {
   verifyUser,
   ketuaJurusan,
@@ -20,5 +21,8 @@ router.get("/hisbarang/:id", verifyUser, getHisBarangById);
 
 router.get("/hisservice", verifyUser, getHisSrv);
 router.get("/hisservice/:id", verifyUser, getHisServiceById);
+
+router.get("/hisbhp", verifyUser, getHisBhp);
+router.get("/hisbhp/:id", verifyUser, getHisBhpById);
 
 export default router;

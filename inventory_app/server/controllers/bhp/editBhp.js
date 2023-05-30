@@ -1,32 +1,31 @@
-import Barang from "../../models/BrgModel.js";
-// import HisBarang from "../../models/HisBrg.js";
-// import User from "../../models/UserModel.js";
+import Bhp from "../../models/BhpModel.js";
 import { Op } from "sequelize";
 import path from "path";
 import fs from "fs";
 import qrcode from "qrcode";
 
-export const updateBarang = async (req, res) => {
+export const editBhp = async (req, res) => {
   // mendapatkan kodebarang sesuai id
-  const barang = await Barang.findOne({
+  const dataBhp = await Bhp.findOne({
     where: {
-      uuid_brg: req.params.id,
+      uuid_bhp: req.params.id,
     },
   });
 
   // jika barang tidak ditemukan
-  if (!barang)
+  if (!dataBhp)
     return res.status(404).json({ msg: "Data Barang Tidak Ditemukan" });
 
   // jika barang ditemukan ambil data dar req body
   const {
-    kd_brg,
-    nm_brg,
-    spek_brg,
-    kondisi_brg,
-    lokasi_brg,
-    tgl_buy_brg,
-    harga_brg,
+    kd_bhp,
+    nm_bhp,
+    spek_bhp,
+    jml_bhp,
+    kondisi_bhp,
+    lokasi_bhp,
+    tgl_buy_bhp,
+    harga_bhp,
   } = req.body;
 
   // kode untuk manajemen gambar
@@ -34,20 +33,21 @@ export const updateBarang = async (req, res) => {
   let qrNameFile;
   // check jika gambar null maka langsung update data selain image
   if (req.files === null) {
-    fileName = barang.image_brg;
+    fileName = dataBhp.image_bhp;
     // console.log(fileName);
 
-    let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
-    let newTglMasuk = new Date(tgl_buy_brg).toLocaleDateString();
-    let newHarga = new Intl.NumberFormat("id").format(harga_brg);
+    let newSpesifikasi = spek_bhp.replace(/<[^>]+>/g, " ");
+    let newTglMasuk = new Date(tgl_buy_bhp).toLocaleDateString();
+    let newHarga = new Intl.NumberFormat("id").format(harga_bhp);
 
     // membuat qrcode dari data yang sudah di inputkan
     let data = {
-      "Kode Barang \t\t\t\t": `${kd_brg}`,
-      "Nama Barang \t\t\t": `${nm_brg}`,
+      "Kode Barang \t\t\t\t": `${kd_bhp}`,
+      "Nama Barang \t\t\t": `${nm_bhp}`,
       "Spesifikasi Barang \t": `${newSpesifikasi}`,
-      "Kondisi Barang \t\t\t": `${kondisi_brg}`,
-      "Lokasi Barang \t\t\t": `${lokasi_brg}`,
+      "Jumlah Barang \t\t\t": `${jml_bhp}`,
+      "Kondisi Barang \t\t\t": `${kondisi_bhp}`,
+      "Lokasi Barang \t\t\t": `${lokasi_bhp}`,
       "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
       "Harga Barang \t\t\t": `Rp. ${newHarga}`,
     };
@@ -58,12 +58,12 @@ export const updateBarang = async (req, res) => {
       text += `${x}: ${data[x]}\n`;
     }
     // masukkan data di variabel finalText
-    let finalText = `Data Barang \n\n${text}`;
+    let finalText = `Data Barang Habis Pakai \n\n${text}`;
 
-    let qrNameFile = "qr" + Date.now() + "-" + kd_brg + "update" + ".png";
+    let qrNameFile = "qr" + Date.now() + "-" + kd_bhp + "update" + ".png";
 
     qrcode.toFile(
-      `./public/images/barang/qrcode/${qrNameFile}`,
+      `./public/images/bhp/qrcode/${qrNameFile}`,
       finalText,
       function (err) {
         if (err) throw err;
@@ -71,54 +71,54 @@ export const updateBarang = async (req, res) => {
     );
 
     // deklarasi variabel url diluar scope
-    const url = `${req.protocol}://${req.get(
-      "host"
-    )}/images/barang/${fileName}`;
+    const url = `${req.protocol}://${req.get("host")}/images/bhp/${fileName}`;
     const qrUrl = `${req.protocol}://${req.get(
       "host"
-    )}/images/barang/qrcode/${qrNameFile}`;
+    )}/images/bhp/qrcode/${qrNameFile}`;
 
     try {
       // req.role berasal dari middleware ketika login
       if (req.role === "admin") {
-        await Barang.update(
+        await Bhp.update(
           {
-            kd_brg,
-            nm_brg,
-            spek_brg,
-            kondisi_brg,
-            lokasi_brg,
-            tgl_buy_brg,
-            harga_brg,
-            qrcode_brg: qrNameFile,
-            qrcode_url_brg: qrUrl,
+            kd_bhp,
+            nm_bhp,
+            spek_bhp,
+            jml_bhp,
+            kondisi_bhp,
+            lokasi_bhp,
+            tgl_buy_bhp,
+            harga_bhp,
+            qrcode_bhp: qrNameFile,
+            qrcode_url_bhp: qrUrl,
           },
           {
             where: {
-              id: barang.id,
+              id: dataBhp.id,
             },
           }
         );
       } else {
         // jika user id dan barang user id tidak sama
-        if (req.userId !== barang.userId)
+        if (req.userId !== dataBhp.userId)
           return res.status(403).json({ msg: "Akses Tidak ditemukan" });
         // jika kondisi terpenuhi
-        await Barang.update(
+        await Bhp.update(
           {
-            kd_brg,
-            nm_brg,
-            spek_brg,
-            kondisi_brg,
-            lokasi_brg,
-            tgl_buy_brg,
-            harga_brg,
-            qrcode_brg: qrNameFile,
-            qrcode_url_brg: qrUrl,
+            kd_bhp,
+            nm_bhp,
+            spek_bhp,
+            jml_bhp,
+            kondisi_bhp,
+            lokasi_bhp,
+            tgl_buy_bhp,
+            harga_bhp,
+            qrcode_bhp: qrNameFile,
+            qrcode_url_bhp: qrUrl,
           },
           {
             where: {
-              [Op.and]: [{ id: barang.id }, { userId: req.userId }],
+              [Op.and]: [{ id: dataBhp.id }, { userId: req.userId }],
             },
           }
         );
@@ -145,27 +145,28 @@ export const updateBarang = async (req, res) => {
       return res.status(422).json({ msg: "Ukuran gambar harus dibawah 5MB" });
 
     // hapus gambar
-    const filepath = `./public/images/barang/${barang.image_brg}`;
-    const filePathQr = `./public/images/barang/qrcode/${barang.qrcode_brg}`;
+    const filepath = `./public/images/bhp/${dataBhp.image_bhp}`;
+    const filePathQr = `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`;
     fs.unlinkSync(filepath);
     fs.unlinkSync(filePathQr);
 
     // pindahkan gambar ke folder public
-    file.mv(`./public/images/barang/${fileName}`, async (err) => {
+    file.mv(`./public/images/bhp/${fileName}`, async (err) => {
       if (err) return res.status(500).json({ msg: err.message });
     });
 
-    let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
-    let newTglMasuk = new Date(tgl_buy_brg).toLocaleDateString();
-    let newHarga = new Intl.NumberFormat("id").format(harga_brg);
+    let newSpesifikasi = spek_bhp.replace(/<[^>]+>/g, " ");
+    let newTglMasuk = new Date(tgl_buy_bhp).toLocaleDateString();
+    let newHarga = new Intl.NumberFormat("id").format(harga_bhp);
 
     // membuat qrcode dari data yang sudah di inputkan
     let data = {
-      "Kode Barang \t\t\t\t": `${kd_brg}`,
-      "Nama Barang \t\t\t": `${nm_brg}`,
+      "Kode Barang \t\t\t\t": `${kd_bhp}`,
+      "Nama Barang \t\t\t": `${nm_bhp}`,
       "Spesifikasi Barang \t": `${newSpesifikasi}`,
-      "Kondisi Barang \t\t\t": `${kondisi_brg}`,
-      "Lokasi Barang \t\t\t": `${lokasi_brg}`,
+      "Jumlah Barang \t\t\t": `${jml_bhp}`,
+      "Kondisi Barang \t\t\t": `${kondisi_bhp}`,
+      "Lokasi Barang \t\t\t": `${lokasi_bhp}`,
       "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
       "Harga Barang \t\t\t": `Rp. ${newHarga}`,
     };
@@ -176,12 +177,12 @@ export const updateBarang = async (req, res) => {
       text += `${x}: ${data[x]}\n`;
     }
     // masukkan data di variabel finalText
-    let finalText = `Data Barang \n\n${text}`;
+    let finalText = `Data Barang Habis Pakai \n\n${text}`;
 
-    let qrNameFile = "qr" + Date.now() + "-" + kd_brg + ext;
+    let qrNameFile = "qr" + Date.now() + "-" + kd_bhp + "-update-" + ext;
 
     qrcode.toFile(
-      `./public/images/barang/qrcode/${qrNameFile}`,
+      `./public/images/bhp/qrcode/${qrNameFile}`,
       finalText,
       function (err) {
         if (err) throw err;
@@ -189,58 +190,58 @@ export const updateBarang = async (req, res) => {
     );
 
     // deklarasi variabel url diluar scope
-    const url = `${req.protocol}://${req.get(
-      "host"
-    )}/images/barang/${fileName}`;
+    const url = `${req.protocol}://${req.get("host")}/images/bhp/${fileName}`;
     const qrUrl = `${req.protocol}://${req.get(
       "host"
-    )}/images/barang/qrcode/${qrNameFile}`;
+    )}/images/bhp/qrcode/${qrNameFile}`;
 
     try {
       // req.role berasal dari middleware ketika login
       if (req.role === "admin") {
-        await Barang.update(
+        await Bhp.update(
           {
-            kd_brg,
-            nm_brg,
-            spek_brg,
-            kondisi_brg,
-            lokasi_brg,
-            tgl_buy_brg,
-            harga_brg,
-            image_brg: fileName,
-            url_brg: url,
-            qrcode_brg: qrNameFile,
-            qrcode_url_brg: qrUrl,
+            kd_bhp,
+            nm_bhp,
+            spek_bhp,
+            jml_bhp,
+            kondisi_bhp,
+            lokasi_bhp,
+            tgl_buy_bhp,
+            harga_bhp,
+            image_bhp: fileName,
+            url_bhp: url,
+            qrcode_bhp: qrNameFile,
+            qrcode_url_bhp: qrUrl,
           },
           {
             where: {
-              id: barang.id,
+              id: dataBhp.id,
             },
           }
         );
       } else {
         // jika user id dan barang user id tidak sama
-        if (req.userId !== barang.userId)
+        if (req.userId !== dataBhp.userId)
           return res.status(403).json({ msg: "Akses Tidak ditemukan" });
         // jika kondisi terpenuhi
-        await Barang.update(
+        await Bhp.update(
           {
-            kd_brg,
-            nm_brg,
-            spek_brg,
-            kondisi_brg,
-            lokasi_brg,
-            tgl_buy_brg,
-            harga_brg,
-            image_brg: fileName,
-            url_brg: url,
-            qrcode_brg: qrNameFile,
-            qrcode_url_brg: qrUrl,
+            kd_bhp,
+            nm_bhp,
+            spek_bhp,
+            jml_bhp,
+            kondisi_bhp,
+            lokasi_bhp,
+            tgl_buy_bhp,
+            harga_bhp,
+            image_bhp: fileName,
+            url_bhp: url,
+            qrcode_bhp: qrNameFile,
+            qrcode_url_bhp: qrUrl,
           },
           {
             where: {
-              [Op.and]: [{ id: barang.id }, { userId: req.userId }],
+              [Op.and]: [{ id: dataBhp.id }, { userId: req.userId }],
             },
           }
         );

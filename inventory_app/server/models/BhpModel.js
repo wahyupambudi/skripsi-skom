@@ -6,8 +6,8 @@ import Users from "./UserModel.js";
 const { DataTypes } = Sequelize;
 
 // membuat table Jasa Barangs
-const Jbarangs = db.define(
-  "tb_barang_habis_pakai",
+const Bhp = db.define(
+  "tb_barang_hp",
   {
     uuid_bhp: {
       type: DataTypes.STRING,
@@ -54,8 +54,15 @@ const Jbarangs = db.define(
         notEmpty: true,
       },
     },
+    lokasi_bhp: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     tgl_buy_bhp: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -93,11 +100,19 @@ const Jbarangs = db.define(
     },
   },
   {
+    indexes: [
+      {
+        unique: true,
+        fields: ["kd_bhp"],
+      },
+    ],
+  },
+  {
     freezeTableName: true,
   }
 );
 
-Users.hasMany(Jbarangs);
-Jbarangs.belongsTo(Users, { foreignKey: "userId" });
+Users.hasMany(Bhp);
+Bhp.belongsTo(Users, { foreignKey: "userId" });
 
-export default Jbarangs;
+export default Bhp;

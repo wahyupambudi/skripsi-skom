@@ -5,16 +5,16 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useSelector } from "react-redux";
 
-const ServicesList = () => {
+const BhpList = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   // const [msg, setMsg] = useState("");
   const { user } = useSelector((state) => state.auth);
-  const [barangs, setProducts] = useState([]);
+  const [bhp, setBhp] = useState([]);
 
   useEffect(() => {
     RefreshToken();
-    getProducts();
+    getBhp();
   }, []);
 
   const RefreshToken = async () => {
@@ -49,13 +49,13 @@ const ServicesList = () => {
     }
   );
 
-  const getProducts = async () => {
-    let response = await axiosJWT.get("http://localhost:2023/srv/", {
+  const getBhp = async () => {
+    let response = await axiosJWT.get("http://localhost:2023/bhp/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setProducts(response.data);
+    setBhp(response.data);
   };
 
   function ConfirmDelete() {
@@ -65,49 +65,34 @@ const ServicesList = () => {
   const deleteProduct = async (productId) => {
     try {
       if (ConfirmDelete()) {
-        await axios.delete(`http://localhost:2023/srv/${productId}`);
+        await axios.delete(`http://localhost:2023/bhp/${productId}`);
       } else {
-        getProducts();
+        getBhp();
       }
     } catch (error) {
       if (error.response) {
         alert(error.response.data.msg);
       }
     }
-    // if (ConfirmDelete()) {
-    //   await axios.delete(`http://localhost:2023/srv/${productId}`);
-    // } else {
-    //   alert("Asdasd");
-    // }
-    getProducts();
+    getBhp();
   };
 
   return (
     <div>
-      {/* <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-        crossorigin="anonymous"
-      ></link> */}
-
       <link
         rel="stylesheet"
         href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
       />
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"
-      ></script>
 
-      <h1 className="title">Data Barang Service</h1>
+      <h1 className="title">Barang Habis Pakai</h1>
       <div className="field is-grouped">
         <div className="control">
-          <Link
-            to="/services/add"
-            className="button is-danger is-outlined mb-2"
-          >
+          <Link to="/bhp/add" className="button is-primary mb-2">
+            Tambah Data
+          </Link>
+        </div>
+        <div className="control">
+          <Link to="/bhp/add" className="button is-danger is-outlined mb-2">
             Cetak QrCode
           </Link>
         </div>
@@ -119,7 +104,7 @@ const ServicesList = () => {
               <span className="icon">
                 <i className="mdi mdi-table"></i>
               </span>
-              Data Barang
+              Data Barang Habis Pakai
             </p>
             <a href="#" className="card-header-icon">
               <span className="icon">
@@ -128,102 +113,77 @@ const ServicesList = () => {
             </a>
           </header>
           <div className="card-content">
-            <div className="b-table has-pagination is-size-7 ">
+            <div className="b-table has-pagination is-size-7">
               <div className="table-wrapper has-mobile-cards">
-                <table className="table is-fullwidth is-striped is-hoverable is-fullwidth">
+                <table className="table is-fullwidth is-striped is-hoverable is-fullwidth ">
                   <thead>
                     <tr>
                       <th>No</th>
                       <th>Kode</th>
                       <th>Nama</th>
-                      {/* <th>Spesifikasi</th> */}
-                      <th>List Service</th>
+                      <th>Spesifikasi</th>
+                      <th>Jumlah</th>
+                      <th>Kondisi</th>
                       <th>Lokasi</th>
-                      <th>Tgl Mulai</th>
+                      <th>Tanggal</th>
                       <th>Harga</th>
-                      <th>Status</th>
-                      <th>Tgl Selesai</th>
                       <th>Aksi</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {barangs.map((product, index) => (
-                      <tr key={product.uuid_brg_srv}>
-                        <td data-label="Nomor">{index + 1}</td>
-                        <td data-label="Kode Barang">{product.kd_brg_srv}</td>
-                        <td data-label="Nama Barang">{product.nm_brg_srv}</td>
-                        {/* <td>{product.spek_brg_srv}</td> */}
-
+                    {bhp.map((product, index) => (
+                      <tr key={product.uuid_bhp}>
+                        <td data-label="No">{index + 1}</td>
+                        <td data-label="Kode Barang">{product.kd_bhp}</td>
+                        <td data-label="Nama Barang">{product.nm_bhp}</td>
                         <td
-                          data-label="List Service"
+                          data-label="Spesifikasi"
                           dangerouslySetInnerHTML={{
-                            __html: product.srv_list,
+                            __html: product.spek_bhp,
                           }}
                         ></td>
-
-                        <td data-label="Lokasi Service">
-                          {product.lokasi_srv}
+                        <td>{product.jml_bhp}</td>
+                        <td data-label="Kondisi">{product.kondisi_bhp}</td>
+                        <td data-label="Lokasi Barang">{product.lokasi_bhp}</td>
+                        <td data-label="Tanggal perolehan">
+                          {new Date(product.tgl_buy_bhp).toLocaleDateString()}
                         </td>
-                        <td data-label="Tanggal Mulai">
-                          {/* {new Date(product.tgl_mulai).toLocaleDateString()} */}
-                          {product.tgl_mulai}
-                        </td>
-                        <td data-label="Harga">
+                        <td data-label="Harga Barang">
                           Rp.{" "}
                           {new Intl.NumberFormat("id").format(
-                            product.harga_srv
+                            product.harga_bhp
                           )}
                         </td>
-                        <td data-label="Status">{product.status_srv}</td>
-                        <td data-label="Tanggal Selesai">
-                          {/* {new Date(product.tgl_selesai).toLocaleDateString()} */}
-                          {product.tgl_selesai}
-                        </td>
-
-                        {/* <td>
-                  <img src={product.url_brg_srv} width={150} alt="Gambar Barang" />
-                </td> */}
-                        {/* <td>
-                  <a href={product.qrcode_url_brg_srv} target="_blank">
-                    <img
-                      src={product.qrcode_url_brg_srv}
-                      width={100}
-                      alt="QrCode"
-                    />
-                  </a>
-                </td> */}
                         {user && user.user.role !== "ketuajurusan" && (
                           <td>
                             <Link
-                              to={`/services/edit/${product.uuid_brg_srv}`}
+                              to={`/bhp/edit/${product.uuid_bhp}`}
                               className="button is-small is-warning"
                               title="Edit Data"
                             >
                               <span className="icon is-small">
-                                <i className="mdi mdi-pencil"></i>
+                                <i className="mdi mdi-24px mdi-pencil"></i>
                               </span>
                             </Link>
-
+                            <span className="ml-1"></span>
                             <Link
-                              to={`/services/detail/${product.uuid_brg_srv}`}
+                              to={`/bhp/detail/${product.uuid_bhp}`}
                               className="button is-small is-info"
                               title="Detail Data"
                             >
                               <span className="icon is-small">
-                                <i className="mdi mdi-magnify"></i>
+                                <i className="mdi mdi-24px mdi-magnify"></i>
                               </span>
                             </Link>
+                            <span className="ml-1"></span>
 
                             <button
-                              onClick={() =>
-                                deleteProduct(product.uuid_brg_srv)
-                              }
+                              onClick={() => deleteProduct(product.uuid_bhp)}
                               className="button is-small is-danger"
                               title="Hapus Data"
                             >
                               <span className="icon is-small">
-                                <i className="mdi mdi-delete"></i>
+                                <i className="mdi mdi-24px mdi-delete"></i>
                               </span>
                             </button>
                           </td>
@@ -232,12 +192,12 @@ const ServicesList = () => {
                           <td>
                             <span className="ml-1"></span>
                             <Link
-                              to={`/services/detail/${product.uuid_brg_srv}`}
+                              to={`/bhp/detail/${product.uuid_bhp}`}
                               className="button is-small is-info"
                               title="Detail Data"
                             >
                               <span className="icon is-small">
-                                <i className="mdi mdi-magnify"></i>
+                                <i className="mdi mdi-24px mdi-magnify"></i>
                               </span>
                             </Link>
                           </td>
@@ -279,4 +239,4 @@ const ServicesList = () => {
   );
 };
 
-export default ServicesList;
+export default BhpList;

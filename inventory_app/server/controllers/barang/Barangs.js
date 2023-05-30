@@ -1,6 +1,7 @@
 import Barang from "../../models/BrgModel.js";
 import hisBrg from "../../models/HisBrg.js";
 import srvBrg from "../../models/ServicesBrg.js";
+import hisBhp from "../../models/HisBhp.js";
 import User from "../../models/UserModel.js";
 import { Sequelize } from "sequelize";
 // import path from "path";

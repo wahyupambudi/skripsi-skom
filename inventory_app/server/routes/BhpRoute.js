@@ -1,11 +1,8 @@
 import express from "express";
-import {
-  getJbarangs,
-  getJbarangById,
-  createJbarang,
-  updateJbarang,
-  deleteJbarang,
-} from "../controllers/Bhps.js";
+import { getBhp, getBhpById } from "../controllers/bhp/Bhp.js";
+import { addBhp } from "../controllers/bhp/addBhp.js";
+import { editBhp } from "../controllers/bhp/editBhp.js";
+import { deleteBhp } from "../controllers/bhp/deleteBhp.js";
 import {
   verifyUser,
   ketuaJurusan,
@@ -14,22 +11,10 @@ import {
 
 const router = express.Router();
 
-router.get("/jbarangs", verifyUser, verifyToken, getJbarangs);
-router.get("/jbarangs/:id", verifyUser, verifyToken, getJbarangById);
-router.post("/jbarangs", verifyUser, verifyToken, ketuaJurusan, createJbarang);
-router.patch(
-  "/jbarangs/:id",
-  verifyUser,
-  verifyToken,
-  ketuaJurusan,
-  updateJbarang
-);
-router.delete(
-  "/jbarangs/:id",
-  verifyUser,
-  verifyToken,
-  ketuaJurusan,
-  deleteJbarang
-);
+router.get("/bhp", verifyUser, getBhp);
+router.get("/bhp/:id", verifyUser, getBhpById);
+router.post("/bhp", verifyUser, ketuaJurusan, addBhp);
+router.patch("/bhp/:id", verifyUser, ketuaJurusan, editBhp);
+router.delete("/bhp/:id", verifyUser, ketuaJurusan, deleteBhp);
 
 export default router;

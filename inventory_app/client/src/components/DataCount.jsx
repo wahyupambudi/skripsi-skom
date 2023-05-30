@@ -74,7 +74,7 @@ const DataCount = () => {
   };
 
   const getCountBarangHP = async () => {
-    const response = await axiosJWT.get("http://localhost:2023/barangs", {
+    const response = await axiosJWT.get("http://localhost:2023/bhp", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

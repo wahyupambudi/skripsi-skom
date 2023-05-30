@@ -1,19 +1,10 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 // import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { LogOut, reset } from "../features/authSlice";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-
-  const logout = () => {
-    dispatch(LogOut());
-    dispatch(reset());
-    navigate("/");
-  };
 
   return (
     <div>
@@ -58,28 +49,29 @@ const Sidebar = () => {
             <li>
               <NavLink to={"/services"}>
                 <span className="icon ">
-                  <i className="mdi mdi-table"></i>
+                  <i className="mdi mdi-settings"></i>
                 </span>
                 <span className="menu-item-label">Data Service</span>
               </NavLink>
             </li>
           </ul>
-          <p className="menu-label">Data User</p>
-          <ul className="menu-list">
-            <li>
-              <NavLink to={"/users"}>
-                <span className="icon ">
-                  <i className="mdi mdi-account"></i>
-                </span>
-                <span className="menu-item-label">Data User</span>
-              </NavLink>
-            </li>
-          </ul>
+          {user && user.user.role === "admin" && (
+            <ul className="menu-list">
+              <li>
+                <NavLink to={"/users"}>
+                  <span className="icon ">
+                    <i className="mdi mdi-account"></i>
+                  </span>
+                  <span className="menu-item-label">Data User</span>
+                </NavLink>
+              </li>
+            </ul>
+          )}
           <p className="menu-label">About</p>
           <ul className="menu-list">
             <li>
               <a
-                href="https://github.com/vikdiesel/admin-one-bulma-dashboard"
+                href="https://github.com/wahyupambudi"
                 target="_blank"
                 className="has-icon"
               >
@@ -87,17 +79,6 @@ const Sidebar = () => {
                   <i className="mdi mdi-github-circle"></i>
                 </span>
                 <span className="menu-item-label">GitHub</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://justboil.me/bulma-admin-template/free-html-dashboard/"
-                className="has-icon"
-              >
-                <span className="icon">
-                  <i className="mdi mdi-help-circle"></i>
-                </span>
-                <span className="menu-item-label">About</span>
               </a>
             </li>
           </ul>

@@ -1,15 +1,16 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
 import Users from "./UserModel.js";
+import Bhp from "./BhpModel.js";
 
 // destruct datatype
 const { DataTypes } = Sequelize;
 
-// membuat table Barangs
-const Barangs = db.define(
-  "tb_barang",
+// membuat table hisBhp
+const hisBhp = db.define(
+  "tb_his_bhp",
   {
-    uuid_brg: {
+    uuid_bhp: {
       type: DataTypes.STRING,
       // membuat uuid secara otomatis
       defaultValue: DataTypes.UUIDV4,
@@ -19,68 +20,75 @@ const Barangs = db.define(
         notEmpty: true,
       },
     },
-    kd_brg: {
+    kd_bhp: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    nm_brg: {
+    nm_bhp: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    spek_brg: {
+    spek_bhp: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    kondisi_brg: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    lokasi_brg: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    tgl_buy_brg: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    harga_brg: {
+    jml_bhp: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    image_brg: {
+    kondisi_bhp: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    lokasi_bhp: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    tgl_buy_bhp: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    harga_bhp: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    image_bhp: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    url_brg: {
+    url_bhp: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    qrcode_brg: {
+    qrcode_bhp: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    qrcode_url_brg: {
+    qrcode_url_bhp: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -93,22 +101,19 @@ const Barangs = db.define(
     },
   },
   {
-    indexes: [
-      {
-        unique: true,
-        fields: ["kd_brg"],
-      },
-    ],
-  },
-  {
     freezeTableName: true,
   }
 );
 
-Users.hasMany(Barangs);
-Barangs.belongsTo(Users, { foreignKey: "userId" });
+Users.hasMany(hisBhp);
+hisBhp.belongsTo(Users, { foreignKey: "userId" });
+hisBhp.belongsTo(Bhp, {
+  foreignKey: "kd_bhp",
+  targetKey: "kd_bhp",
+  onDelete: "CASCADE",
+});
 
-export default Barangs;
+export default hisBhp;
 
 // (async () => {
 //   await db.sync();
