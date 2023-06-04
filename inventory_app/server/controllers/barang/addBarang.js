@@ -52,11 +52,11 @@ export const createBarang = async (req, res) => {
         let data = {
           "Kode Barang \t\t\t\t": `${kd_brg}`,
           "Nama Barang \t\t\t": `${nm_brg}`,
-          "Spesifikasi Barang \t": `${newSpesifikasi}`,
           "Kondisi Barang \t\t\t": `${kondisi_brg}`,
           "Lokasi Barang \t\t\t": `${lokasi_brg}`,
           "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
           "Harga Barang \t\t\t": `Rp. ${newHarga}`,
+          "Spesifikasi Barang \t": `${newSpesifikasi}`,
         };
 
         // membuat perulangan menampilkan berupa teks saja.
@@ -67,7 +67,7 @@ export const createBarang = async (req, res) => {
         // masukkan data di variabel finalText
         let finalText = `Data Barang \n\n${text}`;
 
-        const qrNameFile = Date.now() + "-" + nm_brg + ".png";
+        let qrNameFile = "qr-" + nm_brg + "-" + kd_brg + ".png";
 
         qrcode.toFile(
           `./public/images/barang/qrcode/${qrNameFile}`,
@@ -114,7 +114,8 @@ export const createBarang = async (req, res) => {
     const url = `${req.protocol}://${req.get(
       "host"
     )}/images/barang/${fileName}`;
-    const allowedType = [".png", ".jpg", ".jpeg"];
+
+    const allowedType = [".png", ".jpg", ".jpeg", ".webp"];
 
     // membuat kondisi jika variabel allowedType dan jika fileSize
     if (!allowedType.includes(ext.toLowerCase()))
@@ -134,11 +135,11 @@ export const createBarang = async (req, res) => {
       let data = {
         "Kode Barang \t\t\t\t": `${kd_brg}`,
         "Nama Barang \t\t\t": `${nm_brg}`,
-        "Spesifikasi Barang \t": `${newSpesifikasi}`,
         "Kondisi Barang \t\t\t": `${kondisi_brg}`,
         "Lokasi Barang \t\t\t": `${lokasi_brg}`,
         "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
         "Harga Barang \t\t\t": `Rp. ${newHarga}`,
+        "Spesifikasi Barang \t": `${newSpesifikasi}`,
       };
 
       // membuat perulangan menampilkan berupa teks saja.
@@ -149,7 +150,7 @@ export const createBarang = async (req, res) => {
       // masukkan data di variabel finalText
       let finalText = `Data Barang \n\n${text}`;
 
-      const qrNameFile = Date.now() + "-" + nm_brg + ext;
+      let qrNameFile = "qr-" + nm_brg + "-" + kd_brg + ".png";
 
       qrcode.toFile(
         `./public/images/barang/qrcode/${qrNameFile}`,

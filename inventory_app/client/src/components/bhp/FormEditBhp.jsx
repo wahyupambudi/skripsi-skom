@@ -214,16 +214,16 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded">
-                      <input
-                        type="text"
-                        className="input"
+                    <div className="select is-fullwidth">
+                      <select
                         value={kondisi_bhp}
                         onChange={(e) => setKonbhp(e.target.value)}
-                        placeholder="Kondisi Barang"
-                        required
-                      />
-                    </p>
+                      >
+                        <option value="select">--Pilih Kondisi Barang--</option>
+                        <option value="Baik">Baik</option>
+                        <option value="Rusak">Rusak</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>

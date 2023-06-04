@@ -24,6 +24,7 @@ export const getSrv = async (req, res) => {
           "harga_srv",
           "status_srv",
           "tgl_selesai",
+          "updatedAt",
         ],
         // memasukkan nama, email dari model User
         include: [
@@ -45,7 +46,7 @@ export const getServiceById = async (req, res) => {
   try {
     const serviceBarang = await srvBrg.findOne({
       where: {
-        uuid_brg_srv: req.params.id,
+        kd_brg_srv: req.params.id,
       },
     });
     // jika barang tidak ditemukan
@@ -68,6 +69,7 @@ export const getServiceById = async (req, res) => {
           "harga_srv",
           "status_srv",
           "tgl_selesai",
+          "updatedAt",
         ],
         where: {
           id: serviceBarang.id,

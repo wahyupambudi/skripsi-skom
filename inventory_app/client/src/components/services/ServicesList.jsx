@@ -224,7 +224,7 @@ const ServicesList = () => {
                         {user && user.user.role !== "ketuajurusan" && (
                           <td>
                             <Link
-                              to={`/services/edit/${product.uuid_brg_srv}`}
+                              to={`/services/edit/${product.kd_brg_srv}`}
                               className="button is-small is-warning"
                               title="Edit Data"
                             >
@@ -232,9 +232,10 @@ const ServicesList = () => {
                                 <i className="mdi mdi-pencil"></i>
                               </span>
                             </Link>
+                            <span className="ml-1"></span>
 
                             <Link
-                              to={`/services/detail/${product.uuid_brg_srv}`}
+                              to={`/services/detail/${product.kd_brg_srv}`}
                               className="button is-small is-info"
                               title="Detail Data"
                             >
@@ -242,11 +243,10 @@ const ServicesList = () => {
                                 <i className="mdi mdi-magnify"></i>
                               </span>
                             </Link>
+                            <span className="ml-1"></span>
 
                             <button
-                              onClick={() =>
-                                deleteProduct(product.uuid_brg_srv)
-                              }
+                              onClick={() => deleteProduct(product.kd_brg_srv)}
                               className="button is-small is-danger"
                               title="Hapus Data"
                             >

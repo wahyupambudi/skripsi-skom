@@ -273,7 +273,7 @@ const FormAddService = () => {
               </div>
               <div className="field is-horizontal ">
                 <div className="field-label is-normal">
-                  <label className="label">Harga Barang</label>
+                  <label className="label">Harga Service</label>
                 </div>
                 <div className="field-body">
                   <div className="field">
@@ -283,7 +283,7 @@ const FormAddService = () => {
                         className="input"
                         value={harga_brg}
                         onChange={(e) => setHrgbrg(e.target.value)}
-                        placeholder="Harga Barang"
+                        placeholder="Harga Service"
                         required
                       />
                       <span className="icon is-small is-left">

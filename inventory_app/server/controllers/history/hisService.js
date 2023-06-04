@@ -46,7 +46,7 @@ export const getHisServiceById = async (req, res) => {
   try {
     const hisServiceBarang = await hisSrvBrg.findAll({
       where: {
-        uuid_brg_srv: req.params.id,
+        kd_brg_srv: req.params.id,
       },
     });
 
@@ -73,7 +73,7 @@ export const getHisServiceById = async (req, res) => {
           "updatedAt",
         ],
         where: {
-          uuid_brg_srv: req.params.id,
+          kd_brg_srv: req.params.id,
         },
         // memasukkan nama, email dari model User
         include: [

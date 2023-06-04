@@ -49,7 +49,7 @@ export const getHisBarangById = async (req, res) => {
   try {
     const hisBarang = await hisBrg.findAll({
       where: {
-        uuid_brg: req.params.id,
+        kd_brg: req.params.id,
       },
     });
     // jika hisBarang tidak ditemukan
@@ -77,7 +77,7 @@ export const getHisBarangById = async (req, res) => {
           "updatedAt",
         ],
         where: {
-          uuid_brg: req.params.id,
+          kd_brg: req.params.id,
         },
         // memasukkan nama, email dari model User
         include: [

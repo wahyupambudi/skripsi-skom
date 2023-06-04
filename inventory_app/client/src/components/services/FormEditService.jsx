@@ -96,7 +96,7 @@ const FormEditService = () => {
 
       <div className="card column">
         <h1 className="title has-text-primary">Data Service Barang</h1>
-        <h2 className="subtitle">Tambah Data Service Barang</h2>
+        <h2 className="subtitle">Update Data Service Barang</h2>
       </div>
       <section className=" is-main-section">
         <div className="field is-grouped">
@@ -112,7 +112,7 @@ const FormEditService = () => {
               <span className="icon">
                 <i className="mdi mdi-ballot"></i>
               </span>
-              Forms Service Barang
+              Forms Update Service Barang
             </p>
           </header>
 

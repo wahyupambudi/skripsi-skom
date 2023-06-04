@@ -57,6 +57,8 @@ const Sidebar = () => {
           </ul>
           {user && user.user.role === "admin" && (
             <ul className="menu-list">
+              <p className="menu-label">Data User</p>
+
               <li>
                 <NavLink to={"/users"}>
                   <span className="icon ">

@@ -90,7 +90,7 @@ const PrintQrcodeBhp = () => {
 
       <div className="field is-grouped">
         <div className="control">
-          <Link to="/products" className="button is-primary">
+          <Link to="/bhp" className="button is-primary">
             Kembali
           </Link>
         </div>

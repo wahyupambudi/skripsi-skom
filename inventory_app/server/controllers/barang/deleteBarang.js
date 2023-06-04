@@ -12,7 +12,7 @@ export const deleteBarang = async (req, res) => {
     // mendapatkan kodebarang sesuai id
     const barang = await Barang.findOne({
       where: {
-        uuid_brg: req.params.id,
+        kd_brg: req.params.id,
       },
     });
 

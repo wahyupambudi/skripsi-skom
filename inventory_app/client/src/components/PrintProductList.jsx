@@ -166,7 +166,7 @@ const PrintProductList = () => {
                           <td>
                             <img
                               src={product.url_brg}
-                              width={150}
+                              width={100}
                               alt="Gambar Barang"
                             />
                           </td>

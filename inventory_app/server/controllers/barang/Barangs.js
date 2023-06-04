@@ -86,7 +86,7 @@ export const getBarangById = async (req, res) => {
   try {
     const barang = await Barang.findOne({
       where: {
-        uuid_brg: req.params.id,
+        kd_brg: req.params.id,
       },
     });
     // jika barang tidak ditemukan

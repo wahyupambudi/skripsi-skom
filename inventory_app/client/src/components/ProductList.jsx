@@ -210,7 +210,7 @@ const ProductList = () => {
                           {user && user.user.role !== "ketuajurusan" && (
                             <td>
                               <Link
-                                to={`/products/edit/${product.uuid_brg}`}
+                                to={`/products/edit/${product.kd_brg}`}
                                 className="button is-small is-warning"
                                 title="Edit Data"
                               >
@@ -220,7 +220,7 @@ const ProductList = () => {
                               </Link>
                               <span className="ml-1"></span>
                               <Link
-                                to={`/products/detail/${product.uuid_brg}`}
+                                to={`/products/detail/${product.kd_brg}`}
                                 className="button is-small is-info"
                                 title="Detail Data"
                               >
@@ -231,7 +231,7 @@ const ProductList = () => {
                               <span className="ml-1"></span>
 
                               <Link
-                                to={`/services/add/${product.uuid_brg}`}
+                                to={`/services/add/${product.kd_brg}`}
                                 className="button is-small is-success"
                                 title="Service Barang"
                               >
@@ -242,7 +242,7 @@ const ProductList = () => {
                               <span className="ml-1"></span>
 
                               <button
-                                onClick={() => deleteProduct(product.uuid_brg)}
+                                onClick={() => deleteProduct(product.kd_brg)}
                                 className="button is-small is-danger"
                                 title="Hapus Data"
                               >
@@ -256,7 +256,7 @@ const ProductList = () => {
                             <td>
                               <span className="ml-1"></span>
                               <Link
-                                to={`/products/detail/${product.uuid_brg}`}
+                                to={`/products/detail/${product.kd_brg}`}
                                 className="button is-small is-info"
                                 title="Detail Data"
                               >

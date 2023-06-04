@@ -48,12 +48,12 @@ export const addBhp = async (req, res) => {
         let data = {
           "Kode Barang \t\t\t\t": `${kd_bhp}`,
           "Nama Barang \t\t\t": `${nm_bhp}`,
-          "Spesifikasi Barang \t": `${newSpesifikasi}`,
           "Jumlah Barang \t\t\t": `${jml_bhp}`,
           "Kondisi Barang \t\t\t": `${kondisi_bhp}`,
           "Lokasi Barang \t\t\t": `${lokasi_bhp}`,
           "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
           "Harga Barang \t\t\t": `Rp. ${newHarga}`,
+          "Spesifikasi Barang \t": `${newSpesifikasi}`,
         };
 
         // membuat perulangan menampilkan berupa teks saja.
@@ -64,7 +64,7 @@ export const addBhp = async (req, res) => {
         // masukkan data di variabel finalText
         let finalText = `Data Barang Habis Pakai \n\n${text}`;
 
-        const qrNameFile = Date.now() + "-" + nm_bhp + ".png";
+        let qrNameFile = "qr-" + nm_bhp + "-" + kd_bhp + ".png";
 
         qrcode.toFile(
           `./public/images/bhp/qrcode/${qrNameFile}`,
@@ -110,7 +110,7 @@ export const addBhp = async (req, res) => {
     const ext = path.extname(file.name);
     const fileName = Date.now() + "-" + file.md5 + ext;
     const url = `${req.protocol}://${req.get("host")}/images/bhp/${fileName}`;
-    const allowedType = [".png", ".jpg", ".jpeg"];
+    const allowedType = [".png", ".jpg", ".jpeg", ".webp"];
 
     // membuat kondisi jika variabel allowedType dan jika fileSize
     if (!allowedType.includes(ext.toLowerCase()))
@@ -131,12 +131,12 @@ export const addBhp = async (req, res) => {
       let data = {
         "Kode Barang \t\t\t\t": `${kd_bhp}`,
         "Nama Barang \t\t\t": `${nm_bhp}`,
-        "Spesifikasi Barang \t": `${newSpesifikasi}`,
         "Jumlah Barang \t\t\t": `${jml_bhp}`,
         "Kondisi Barang \t\t\t": `${kondisi_bhp}`,
         "Lokasi Barang \t\t\t": `${lokasi_bhp}`,
         "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
         "Harga Barang \t\t\t": `Rp. ${newHarga}`,
+        "Spesifikasi Barang \t": `${newSpesifikasi}`,
       };
 
       // membuat perulangan menampilkan berupa teks saja.
@@ -147,7 +147,7 @@ export const addBhp = async (req, res) => {
       // masukkan data di variabel finalText
       let finalText = `Data Barang Habis Pakai \n\n${text}`;
 
-      const qrNameFile = Date.now() + "-" + nm_bhp + ext;
+      let qrNameFile = "qr-" + nm_bhp + "-" + kd_bhp + ".png";
 
       qrcode.toFile(
         `./public/images/bhp/qrcode/${qrNameFile}`,

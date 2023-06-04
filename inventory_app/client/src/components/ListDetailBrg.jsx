@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 
 const ListDetailBrg = () => {
   const [hisbrg, sethisbrg] = useState([]);
+  const [srvbrg, setHisService] = useState([]);
   const [kd_brg, setKdbrg] = useState("");
   const [nm_brg, setNmbrg] = useState("");
   const [spek_brg, setSpekbrg] = useState("");
@@ -38,11 +39,17 @@ const ListDetailBrg = () => {
     };
     getProductById();
     getHisbrg();
-  }, [id, ""]);
+    getServicesById();
+  }, [id, "", ""]);
 
   const getHisbrg = async () => {
     let response = await axios.get(`http://localhost:2023/hisbarang/${id}`);
     sethisbrg(response.data);
+  };
+
+  const getServicesById = async () => {
+    let response = await axios.get(`http://localhost:2023/hisservice/${id}`);
+    setHisService(response.data);
   };
 
   return (
@@ -103,7 +110,7 @@ const ListDetailBrg = () => {
                           Rp. {new Intl.NumberFormat("id").format(harga_brg)}
                         </td>
                         <td>
-                          <img src={url_brg} width={150} alt="Gambar Barang" />
+                          <img src={url_brg} width={100} alt="Gambar Barang" />
                         </td>
                         <td>
                           <a href={qrcode_url_brg} target="_blank">
@@ -115,6 +122,71 @@ const ListDetailBrg = () => {
                           </a>
                         </td>
                       </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <br />
+            <br />
+            <div className="columns">
+              <p>{msg}</p>
+              <div className="field column box is-size-7">
+                <h4>Riwayat Service Barang</h4>
+                <div className="table-container">
+                  <table className="table is-fullwidth is-striped is-hoverable is-fullwidth">
+                    <thead>
+                      <tr>
+                        {/* <th>Kode</th> */}
+                        <th>Nama</th>
+                        <th>List Service</th>
+                        <th>Lokasi</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Harga</th>
+                        <th>Status</th>
+                        <th>Tanggal Selesai</th>
+                        <th>Update</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {srvbrg.map((riwayat, index) => (
+                        <tr key={riwayat.uuid_brg_srv}>
+                          {/* <td>{riwayat.kd_brg}</td> */}
+                          <td>{riwayat.nm_brg_srv}</td>
+                          <td
+                            dangerouslySetInnerHTML={{
+                              __html: riwayat.srv_list,
+                            }}
+                          ></td>
+                          <td>{riwayat.lokasi_srv}</td>
+                          <td>{riwayat.tgl_mulai}</td>
+                          <td>
+                            Rp.{" "}
+                            {new Intl.NumberFormat("id").format(
+                              riwayat.harga_srv
+                            )}
+                          </td>
+                          {riwayat.status_srv === "Proses" && (
+                            <td className="has-text-warning-dark ">
+                              {riwayat.status_srv}
+                            </td>
+                          )}
+                          {riwayat.status_srv === "Selesai" && (
+                            <td className="has-text-primary-dark">
+                              {riwayat.status_srv}
+                            </td>
+                          )}
+                          {riwayat.status_srv === "Rusak" && (
+                            <td className="has-text-danger-dark">
+                              {riwayat.status_srv}
+                            </td>
+                          )}
+                          <td>{riwayat.tgl_selesai}</td>
+                          <td>
+                            {new Date(riwayat.updatedAt).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

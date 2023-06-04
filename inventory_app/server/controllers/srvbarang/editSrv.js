@@ -5,7 +5,7 @@ export const putSrv = async (req, res) => {
   // mendapatkan kodebarang sesuai id
   const serviceBarang = await srvBrg.findOne({
     where: {
-      uuid_brg_srv: req.params.id,
+      kd_brg_srv: req.params.id,
     },
   });
 
