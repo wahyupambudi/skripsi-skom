@@ -28,10 +28,10 @@ const Navbar = () => {
         <div className="navbar-brand">
           <a href="/" className="navbar-item">
             <img
-              src="https://bulma.io/images/bulma-logo.png"
+              src={require("./Sibeje.png")}
               alt="Logo"
-              width="112"
-              height="28"
+              width="100"
+              height="45"
             />
           </a>
 

@@ -1,3 +1,7 @@
+/* html {
+    background-image: linear-gradient(#3ec487, #97d2b7);
+} */
+
 @media screen and (max-width: 1100px) {
     #login {
         margin-right: -14rem;

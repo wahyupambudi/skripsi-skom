@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
@@ -187,7 +187,7 @@ const DataCount = () => {
                 </div>
               </div>
             </div>
-            <div className="tile is-parent">
+            {/* <div className="tile is-parent">
               <div className="card tile is-child">
                 <div className="card-content">
                   <div className="level is-mobile">
@@ -228,7 +228,7 @@ const DataCount = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
       )}

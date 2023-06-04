@@ -8,6 +8,7 @@ const FormEditBhp = () => {
   const [kd_bhp, setKdbhp] = useState("");
   const [nm_bhp, setNmbhp] = useState("");
   const [spek_bhp, setSpekbhp] = useState("");
+  const [jml_bhp, setJmlbhp] = useState("");
   const [kondisi_bhp, setKonbhp] = useState("");
   const [lokasi_bhp, setLokbhp] = useState("");
   const [tgl_buy_bhp, setTglbhp] = useState("");
@@ -28,6 +29,7 @@ const FormEditBhp = () => {
       setKdbhp(response.data.kd_bhp);
       setNmbhp(response.data.nm_bhp);
       setSpekbhp(response.data.spek_bhp);
+      setJmlbhp(response.data.jml_bhp);
       setKonbhp(response.data.kondisi_bhp);
       setLokbhp(response.data.lokasi_bhp);
       setTglbhp(response.data.tgl_buy_bhp);
@@ -54,6 +56,7 @@ const FormEditBhp = () => {
     formData.append("kd_bhp", kd_bhp);
     formData.append("nm_bhp", nm_bhp);
     formData.append("spek_bhp", spek_bhp);
+    formData.append("jml_bhp", jml_bhp);
     formData.append("kondisi_bhp", kondisi_bhp);
     formData.append("lokasi_bhp", lokasi_bhp);
     formData.append("tgl_buy_bhp", tgl_buy_bhp);
@@ -122,7 +125,7 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -132,9 +135,6 @@ const FormEditBhp = () => {
                         required
                         disabled
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -154,9 +154,6 @@ const FormEditBhp = () => {
                         placeholder="Nama Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -167,7 +164,7 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <CKEditor
                         editor={ClassicEditor}
                         value={spek_bhp}
@@ -194,11 +191,30 @@ const FormEditBhp = () => {
               </div>
               <div className="field is-horizontal ">
                 <div className="field-label is-normal">
+                  <label className="label">Jumlah Barang</label>
+                </div>
+                <div className="field-body">
+                  <div className="field">
+                    <p className="control is-expanded">
+                      <input
+                        type="text"
+                        className="input"
+                        value={jml_bhp}
+                        onChange={(e) => setJmlbhp(e.target.value)}
+                        placeholder="Jumlah Barang"
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="field is-horizontal ">
+                <div className="field-label is-normal">
                   <label className="label">Kondisi Barang</label>
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -207,9 +223,6 @@ const FormEditBhp = () => {
                         placeholder="Kondisi Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -220,7 +233,7 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -229,9 +242,6 @@ const FormEditBhp = () => {
                         placeholder="Lokasi Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -242,7 +252,7 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="date"
                         className="input"
@@ -251,9 +261,6 @@ const FormEditBhp = () => {
                         placeholder="Tanggal Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -264,7 +271,7 @@ const FormEditBhp = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="number"
                         className="input"
@@ -273,9 +280,6 @@ const FormEditBhp = () => {
                         placeholder="Harga Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>

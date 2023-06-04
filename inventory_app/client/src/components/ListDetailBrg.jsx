@@ -45,12 +45,6 @@ const ListDetailBrg = () => {
     sethisbrg(response.data);
   };
 
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  ctx.font = "30px Arial";
-  ctx.fillText("Hello, world!", 10, 50);
-  const dataUrl = canvas.toDataURL();
-
   return (
     <div>
       <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -70,8 +64,6 @@ const ListDetailBrg = () => {
             Kembali
           </Link>
         </div>
-        <p id="canvas"></p>
-        <img src={dataUrl} alt="" />
       </div>
       <div className="card is-shadowless">
         <div className="card-content">

@@ -73,6 +73,7 @@ const Sidebar = () => {
               <a
                 href="https://github.com/wahyupambudi"
                 target="_blank"
+                rel="noreferrer"
                 className="has-icon"
               >
                 <span className="icon">

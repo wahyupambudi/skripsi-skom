@@ -49,6 +49,8 @@ export const createUser = async (req, res) => {
     return res.status(400).json({ msg: "Password Tidak Boleh Kosong" });
   } else if (password !== password1) {
     return res.status(400).json({ msg: "Password Tidak Cocok" });
+  } else if (password.length < 8) {
+    return res.status(400).json({ msg: "Password Minimal 8 Karakter" });
   }
   const hashPassword = await argon2.hash(password);
   try {

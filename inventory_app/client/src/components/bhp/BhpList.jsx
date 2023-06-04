@@ -92,7 +92,12 @@ const BhpList = () => {
           </Link>
         </div>
         <div className="control">
-          <Link to="/bhp/add" className="button is-danger is-outlined mb-2">
+          <Link to="/bhp/print" className="button is-info is-outlined mb-2">
+            Cetak PDF
+          </Link>
+        </div>
+        <div className="control">
+          <Link to="/bhp/qrcode" className="button is-danger is-outlined mb-2">
             Cetak QrCode
           </Link>
         </div>
@@ -107,8 +112,10 @@ const BhpList = () => {
               Data Barang Habis Pakai
             </p>
             <a href="#" className="card-header-icon">
-              <span className="icon">
-                <i className="mdi mdi-reload"></i>
+              <span>
+                <button className="button is-primary is-small" onClick={getBhp}>
+                  <i className="mdi mdi-reload"></i>
+                </button>
               </span>
             </a>
           </header>
@@ -206,30 +213,6 @@ const BhpList = () => {
                     ))}
                   </tbody>
                 </table>
-              </div>
-              <div className="notification">
-                <div className="level">
-                  <div className="level-left">
-                    <div className="level-item">
-                      <div className="buttons has-addons">
-                        <button type="button" className="button is-active">
-                          1
-                        </button>
-                        <button type="button" className="button">
-                          2
-                        </button>
-                        <button type="button" className="button">
-                          3
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="level-right">
-                    <div className="level-item">
-                      <small>Page 1 of 3</small>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

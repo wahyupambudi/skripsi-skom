@@ -43,7 +43,7 @@ const Login = () => {
               <div className="column is-5">
                 <form onSubmit={Auth} className="box">
                   {isError && <p className="has-text-centered">{message}</p>}
-                  <h1 className="title is-2">Sign In</h1>
+                  <h1 className="title is-3">Sign In</h1>
                   <div className="field">
                     <label className="label">Email</label>
                     <div className="control">

@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useSelector } from "react-redux";
+import { useReactToPrint } from "react-to-print";
 
 const ProductList = () => {
   const [token, setToken] = useState("");
@@ -77,6 +78,14 @@ const ProductList = () => {
     getProducts();
   };
 
+  // print
+  const componentPDF = useRef();
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Userdata",
+    onAfterPrint: () => alert("Data saved in PDF"),
+  });
+
   return (
     <div>
       {/* <link
@@ -107,7 +116,15 @@ const ProductList = () => {
         </div>
         <div className="control">
           <Link
-            to="/products/add"
+            to="/products/print"
+            className="button is-info is-outlined mb-2"
+          >
+            Cetak PDF
+          </Link>
+        </div>
+        <div className="control">
+          <Link
+            to="/products/qrcode"
             className="button is-danger is-outlined mb-2"
           >
             Cetak QrCode
@@ -124,56 +141,64 @@ const ProductList = () => {
               Data Barang
             </p>
             <a href="#" className="card-header-icon">
-              <span className="icon">
-                <i className="mdi mdi-reload"></i>
+              <span>
+                <button
+                  className="button is-primary is-small"
+                  onClick={getProducts}
+                >
+                  <i className="mdi mdi-reload"></i>
+                </button>
               </span>
             </a>
           </header>
           <div className="card-content">
             <div className="b-table has-pagination is-size-7">
               <div className="table-wrapper has-mobile-cards">
-                <table className="table is-fullwidth is-striped is-hoverable is-fullwidth ">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Kode</th>
-                      <th>Nama</th>
-                      <th>Spesifikasi</th>
-                      <th>Kondisi</th>
-                      <th>Lokasi</th>
-                      <th>Tanggal</th>
-                      <th>Harga</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {barangs.map((product, index) => (
-                      <tr key={product.uuid_brg}>
-                        <td data-label="No">{index + 1}</td>
-                        <td data-label="Kode Barang">{product.kd_brg}</td>
-                        <td data-label="Nama Barang">{product.nm_brg}</td>
-                        <td
-                          data-label="Spesifikasi"
-                          dangerouslySetInnerHTML={{
-                            __html: product.spek_brg,
-                          }}
-                        ></td>
-                        {/* <td>{product.spek_brg}</td> */}
-                        <td data-label="Kondisi">{product.kondisi_brg}</td>
-                        <td data-label="Lokasi Barang">{product.lokasi_brg}</td>
-                        <td data-label="Tanggal perolehan">
-                          {new Date(product.tgl_buy_brg).toLocaleDateString()}
-                        </td>
-                        <td data-label="Harga Barang">
-                          Rp.{" "}
-                          {new Intl.NumberFormat("id").format(
-                            product.harga_brg
-                          )}
-                        </td>
-                        {/* <td>
+                <div ref={componentPDF} style={{ width: "100%" }}>
+                  <table className="table is-fullwidth is-striped is-hoverable is-fullwidth ">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Spesifikasi</th>
+                        <th>Kondisi</th>
+                        <th>Lokasi</th>
+                        <th>Tanggal</th>
+                        <th>Harga</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {barangs.map((product, index) => (
+                        <tr key={product.uuid_brg}>
+                          <td data-label="No">{index + 1}</td>
+                          <td data-label="Kode Barang">{product.kd_brg}</td>
+                          <td data-label="Nama Barang">{product.nm_brg}</td>
+                          <td
+                            data-label="Spesifikasi"
+                            dangerouslySetInnerHTML={{
+                              __html: product.spek_brg,
+                            }}
+                          ></td>
+                          {/* <td>{product.spek_brg}</td> */}
+                          <td data-label="Kondisi">{product.kondisi_brg}</td>
+                          <td data-label="Lokasi Barang">
+                            {product.lokasi_brg}
+                          </td>
+                          <td data-label="Tanggal perolehan">
+                            {new Date(product.tgl_buy_brg).toLocaleDateString()}
+                          </td>
+                          <td data-label="Harga Barang">
+                            Rp.{" "}
+                            {new Intl.NumberFormat("id").format(
+                              product.harga_brg
+                            )}
+                          </td>
+                          {/* <td>
                   <img src={product.url_brg} width={150} alt="Gambar Barang" />
                 </td> */}
-                        {/* <td>
+                          {/* <td>
                   <a href={product.qrcode_url_brg} target="_blank">
                     <img
                       src={product.qrcode_url_brg}
@@ -182,92 +207,69 @@ const ProductList = () => {
                     />
                   </a>
                 </td> */}
-                        {user && user.user.role !== "ketuajurusan" && (
-                          <td>
-                            <Link
-                              to={`/products/edit/${product.uuid_brg}`}
-                              className="button is-small is-warning"
-                              title="Edit Data"
-                            >
-                              <span className="icon is-small">
-                                <i className="mdi mdi-24px mdi-pencil"></i>
-                              </span>
-                            </Link>
-                            <span className="ml-1"></span>
-                            <Link
-                              to={`/products/detail/${product.uuid_brg}`}
-                              className="button is-small is-info"
-                              title="Detail Data"
-                            >
-                              <span className="icon is-small">
-                                <i className="mdi mdi-24px mdi-magnify"></i>
-                              </span>
-                            </Link>
-                            <span className="ml-1"></span>
+                          {user && user.user.role !== "ketuajurusan" && (
+                            <td>
+                              <Link
+                                to={`/products/edit/${product.uuid_brg}`}
+                                className="button is-small is-warning"
+                                title="Edit Data"
+                              >
+                                <span className="icon is-small">
+                                  <i className="mdi mdi-24px mdi-pencil"></i>
+                                </span>
+                              </Link>
+                              <span className="ml-1"></span>
+                              <Link
+                                to={`/products/detail/${product.uuid_brg}`}
+                                className="button is-small is-info"
+                                title="Detail Data"
+                              >
+                                <span className="icon is-small">
+                                  <i className="mdi mdi-24px mdi-magnify"></i>
+                                </span>
+                              </Link>
+                              <span className="ml-1"></span>
 
-                            <Link
-                              to={`/services/add/${product.uuid_brg}`}
-                              className="button is-small is-success"
-                              title="Service Barang"
-                            >
-                              <span className="icon is-small">
-                                <i className="mdi mdi-24px mdi-wrench"></i>
-                              </span>
-                            </Link>
-                            <span className="ml-1"></span>
+                              <Link
+                                to={`/services/add/${product.uuid_brg}`}
+                                className="button is-small is-success"
+                                title="Service Barang"
+                              >
+                                <span className="icon is-small">
+                                  <i className="mdi mdi-24px mdi-wrench"></i>
+                                </span>
+                              </Link>
+                              <span className="ml-1"></span>
 
-                            <button
-                              onClick={() => deleteProduct(product.uuid_brg)}
-                              className="button is-small is-danger"
-                              title="Hapus Data"
-                            >
-                              <span className="icon is-small">
-                                <i className="mdi mdi-24px mdi-delete"></i>
-                              </span>
-                            </button>
-                          </td>
-                        )}
-                        {user && user.user.role === "ketuajurusan" && (
-                          <td>
-                            <span className="ml-1"></span>
-                            <Link
-                              to={`/products/detail/${product.uuid_brg}`}
-                              className="button is-small is-info"
-                              title="Detail Data"
-                            >
-                              <span className="icon is-small">
-                                <i className="mdi mdi-24px mdi-magnify"></i>
-                              </span>
-                            </Link>
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="notification">
-                <div className="level">
-                  <div className="level-left">
-                    <div className="level-item">
-                      <div className="buttons has-addons">
-                        <button type="button" className="button is-active">
-                          1
-                        </button>
-                        <button type="button" className="button">
-                          2
-                        </button>
-                        <button type="button" className="button">
-                          3
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="level-right">
-                    <div className="level-item">
-                      <small>Page 1 of 3</small>
-                    </div>
-                  </div>
+                              <button
+                                onClick={() => deleteProduct(product.uuid_brg)}
+                                className="button is-small is-danger"
+                                title="Hapus Data"
+                              >
+                                <span className="icon is-small">
+                                  <i className="mdi mdi-24px mdi-delete"></i>
+                                </span>
+                              </button>
+                            </td>
+                          )}
+                          {user && user.user.role === "ketuajurusan" && (
+                            <td>
+                              <span className="ml-1"></span>
+                              <Link
+                                to={`/products/detail/${product.uuid_brg}`}
+                                className="button is-small is-info"
+                                title="Detail Data"
+                              >
+                                <span className="icon is-small">
+                                  <i className="mdi mdi-24px mdi-magnify"></i>
+                                </span>
+                              </Link>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

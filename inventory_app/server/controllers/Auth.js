@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     // proses env dari file .env
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "20m",
+      expiresIn: "60m",
     }
   );
   // membuat variabel refreshToken dari data .env
@@ -99,7 +99,7 @@ export const logout = async (req, res) => {
   });
 
   // jika user tidak ditemukan
-  if (!user[0]) return res.sendStatus(204);
+  if (!user[0]) return res.sendStatus(204).json({ msg: "Anda Tidak Login" });
 
   // jika user ditemukan
   const userId = user[0].id;

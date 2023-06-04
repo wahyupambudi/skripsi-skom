@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 const FormEditUser = () => {
@@ -101,8 +101,28 @@ const FormEditUser = () => {
   };
   return (
     <div>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css?family=Nunito"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
+      />
       <h1 className="title">Users</h1>
       <h2 className="subtitle">Update User</h2>
+      <div className="field is-grouped">
+        <div className="control">
+          <Link to="/users/" className="button is-primary mb-2">
+            Kembali
+          </Link>
+        </div>
+      </div>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
@@ -164,6 +184,7 @@ const FormEditUser = () => {
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                     >
+                      <option value="select">--Select Role--</option>
                       <option value="admin">Admin</option>
                       <option value="operator">Operator</option>
                       <option value="ketuajurusan">Ketua Jurusan</option>

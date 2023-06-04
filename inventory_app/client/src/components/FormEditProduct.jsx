@@ -122,7 +122,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -132,9 +132,6 @@ const FormEditProduct = () => {
                         required
                         disabled
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -145,7 +142,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -154,9 +151,6 @@ const FormEditProduct = () => {
                         placeholder="Nama Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -167,7 +161,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <CKEditor
                         editor={ClassicEditor}
                         value={spek_brg}
@@ -198,7 +192,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -207,9 +201,6 @@ const FormEditProduct = () => {
                         placeholder="Kondisi Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -220,7 +211,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -229,9 +220,6 @@ const FormEditProduct = () => {
                         placeholder="Lokasi Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -242,7 +230,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="date"
                         className="input"
@@ -251,9 +239,6 @@ const FormEditProduct = () => {
                         placeholder="Tanggal Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -264,7 +249,7 @@ const FormEditProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="number"
                         className="input"
@@ -273,9 +258,6 @@ const FormEditProduct = () => {
                         placeholder="Harga Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>

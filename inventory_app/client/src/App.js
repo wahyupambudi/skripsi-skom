@@ -16,6 +16,11 @@ import Bhp from "./pages/bhp/Bhp";
 import AddBhp from "./pages/bhp/AddBhp";
 import EditBhp from "./pages/bhp/EditBhp";
 import DetailBhp from "./pages/bhp/DetailBhp";
+import PrintProducts from "./pages/PrintProducts";
+import PrintQrcodeProducts from "./pages/PrintQrcodeProducts";
+import PrintBhp from "./pages/bhp/PrintBhp";
+import PrintQrcodeBhp from "./pages/bhp/PrintQrcodeBhp";
+import PrintServices from "./pages/services/PrintServices";
 
 function App() {
   return (
@@ -40,6 +45,11 @@ function App() {
           <Route path="/bhp/add" element={<AddBhp />} />
           <Route path="/bhp/edit/:id" element={<EditBhp />} />
           <Route path="/bhp/detail/:id" element={<DetailBhp />} />
+          <Route path="/products/print" element={<PrintProducts />} />
+          <Route path="/products/qrcode" element={<PrintQrcodeProducts />} />
+          <Route path="/bhp/print" element={<PrintBhp />} />
+          <Route path="/bhp/qrcode" element={<PrintQrcodeBhp />} />
+          <Route path="/services/print" element={<PrintServices />} />
         </Routes>
       </BrowserRouter>
     </div>

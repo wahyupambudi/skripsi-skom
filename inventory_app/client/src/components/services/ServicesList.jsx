@@ -105,10 +105,10 @@ const ServicesList = () => {
       <div className="field is-grouped">
         <div className="control">
           <Link
-            to="/services/add"
-            className="button is-danger is-outlined mb-2"
+            to="/services/print"
+            className="button is-info is-outlined mb-2"
           >
-            Cetak QrCode
+            Cetak PDF
           </Link>
         </div>
       </div>
@@ -122,8 +122,13 @@ const ServicesList = () => {
               Data Barang
             </p>
             <a href="#" className="card-header-icon">
-              <span className="icon">
-                <i className="mdi mdi-reload"></i>
+              <span>
+                <button
+                  className="button is-primary is-small"
+                  onClick={getProducts}
+                >
+                  <i className="mdi mdi-reload"></i>
+                </button>
               </span>
             </a>
           </header>
@@ -175,7 +180,30 @@ const ServicesList = () => {
                             product.harga_srv
                           )}
                         </td>
-                        <td data-label="Status">{product.status_srv}</td>
+                        {product.status_srv === "Proses" && (
+                          <td
+                            data-label="Status"
+                            className="button is-warning is-rounded is-small"
+                          >
+                            {product.status_srv}
+                          </td>
+                        )}
+                        {product.status_srv === "Selesai" && (
+                          <td
+                            data-label="Status"
+                            className="button is-primary is-rounded is-small"
+                          >
+                            {product.status_srv}
+                          </td>
+                        )}
+                        {product.status_srv === "Rusak" && (
+                          <td
+                            data-label="Status"
+                            className="button is-danger is-rounded is-small"
+                          >
+                            {product.status_srv}
+                          </td>
+                        )}
                         <td data-label="Tanggal Selesai">
                           {/* {new Date(product.tgl_selesai).toLocaleDateString()} */}
                           {product.tgl_selesai}
@@ -247,7 +275,7 @@ const ServicesList = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="notification">
+              {/* <div className="notification">
                 <div className="level">
                   <div className="level-left">
                     <div className="level-item">
@@ -270,7 +298,7 @@ const ServicesList = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

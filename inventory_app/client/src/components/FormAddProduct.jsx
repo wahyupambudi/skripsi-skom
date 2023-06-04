@@ -98,7 +98,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -107,9 +107,6 @@ const FormAddProduct = () => {
                         placeholder="Kode Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -120,7 +117,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -129,9 +126,6 @@ const FormAddProduct = () => {
                         placeholder="Nama Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -142,7 +136,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <CKEditor
                         editor={ClassicEditor}
                         value={spek_brg}
@@ -163,9 +157,6 @@ const FormAddProduct = () => {
                         onChange={(e) => setSpekbrg(e.target.value)}
                         required
                       ></textarea> */}
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -176,7 +167,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -185,9 +176,6 @@ const FormAddProduct = () => {
                         placeholder="Kondisi Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -198,7 +186,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="text"
                         className="input"
@@ -207,9 +195,6 @@ const FormAddProduct = () => {
                         placeholder="Lokasi Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -220,7 +205,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="date"
                         className="input"
@@ -229,9 +214,6 @@ const FormAddProduct = () => {
                         placeholder="Tanggal Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
@@ -242,7 +224,7 @@ const FormAddProduct = () => {
                 </div>
                 <div className="field-body">
                   <div className="field">
-                    <p className="control is-expanded has-icons-left">
+                    <p className="control is-expanded">
                       <input
                         type="number"
                         className="input"
@@ -251,9 +233,6 @@ const FormAddProduct = () => {
                         placeholder="Harga Barang"
                         required
                       />
-                      <span className="icon is-small is-left">
-                        <i className="mdi mdi-account"></i>
-                      </span>
                     </p>
                   </div>
                 </div>
