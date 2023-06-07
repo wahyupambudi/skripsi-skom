@@ -22,7 +22,11 @@ export const getUserById = async (req, res) => {
         uuid_user: req.params.id,
       },
     });
-    res.status(200).json({ response });
+    if (response !== null) {
+      res.status(200).json({ response });
+    } else {
+      return res.status(404).json({ msg: "User tidak ditemukan" });
+    }
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }

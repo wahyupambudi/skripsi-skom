@@ -86,11 +86,13 @@ const BhpList = () => {
 
       <h1 className="title">Barang Habis Pakai</h1>
       <div className="field is-grouped">
-        <div className="control">
-          <Link to="/bhp/add" className="button is-primary mb-2">
-            Tambah Data
-          </Link>
-        </div>
+        {user && user.user.role !== "ketuajurusan" && (
+          <div className="control">
+            <Link to="/bhp/add" className="button is-primary mb-2">
+              Tambah Data
+            </Link>
+          </div>
+        )}
         <div className="control">
           <Link to="/bhp/print" className="button is-info is-outlined mb-2">
             Cetak PDF

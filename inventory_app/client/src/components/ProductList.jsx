@@ -109,11 +109,13 @@ const ProductList = () => {
       <h1 className="title">Data Barang</h1>
       <h2 className="subtitle">List of Products</h2>
       <div className="field is-grouped">
-        <div className="control">
-          <Link to="/products/add" className="button is-primary mb-2">
-            Tambah Data
-          </Link>
-        </div>
+        {user && user.user.role !== "ketuajurusan" && (
+          <div className="control">
+            <Link to="/products/add" className="button is-primary mb-2">
+              Tambah Data
+            </Link>
+          </div>
+        )}
         <div className="control">
           <Link
             to="/products/print"
