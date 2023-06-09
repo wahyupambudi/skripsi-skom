@@ -70,7 +70,7 @@ const DataCount = () => {
       },
     });
     // console.log(response.data.response);
-    setCountBarang(response.data.length);
+    setCountBarang(response.data.response.length);
   };
 
   const getCountBarangHP = async () => {
@@ -80,7 +80,7 @@ const DataCount = () => {
       },
     });
     // console.log(response.data.response);
-    setCountBarangHP(response.data.length);
+    setCountBarangHP(response.data.response.length);
   };
 
   const getCountService = async () => {
@@ -90,7 +90,7 @@ const DataCount = () => {
       },
     });
     // console.log(response.data.response);
-    setCountService(response.data.length);
+    setCountService(response.data.response.length);
   };
 
   return (

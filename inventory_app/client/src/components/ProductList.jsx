@@ -5,18 +5,26 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
+import ReactPaginate from "react-paginate";
+import "./Login.css";
 
 const ProductList = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
-  // const [msg, setMsg] = useState("");
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [query, setQuery] = useState("");
+  const [msg, setMsg] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [barangs, setProducts] = useState([]);
 
   useEffect(() => {
     RefreshToken();
     getProducts();
-  }, []);
+  }, [page, keyword]);
 
   const RefreshToken = async () => {
     try {
@@ -51,16 +59,41 @@ const ProductList = () => {
   );
 
   const getProducts = async () => {
-    let response = await axiosJWT.get("http://localhost:2023/barangs/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setProducts(response.data);
+    let response = await axiosJWT.get(
+      `http://localhost:2023/barangs?search_query=${keyword}&page=${page}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setProducts(response.data.response);
+    setPage(response.data.page);
+    setPages(response.data.totalPage);
+    setRows(response.data.totalRows);
+    // console.log(response.data.response);
+  };
+
+  const changePage = ({ selected }) => {
+    setPage(selected);
+    if (selected === 9) {
+      setMsg(
+        "Jika tidak menemukan data yang Anda cari, silahkan cari data dengan kata kunci spesifik!"
+      );
+    } else {
+      setMsg("");
+    }
+  };
+
+  const searchData = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setMsg("");
+    setKeyword(query);
   };
 
   function ConfirmDelete() {
-    return confirm("Hapus Data Ini?");
+    return window.confirm("Hapus Data Ini?");
   }
 
   const deleteProduct = async (productId) => {
@@ -85,7 +118,6 @@ const ProductList = () => {
     documentTitle: "Userdata",
     onAfterPrint: () => alert("Data saved in PDF"),
   });
-
   return (
     <div>
       {/* <link
@@ -107,7 +139,6 @@ const ProductList = () => {
       />
 
       <h1 className="title">Data Barang</h1>
-      <h2 className="subtitle">List of Products</h2>
       <div className="field is-grouped">
         {user && user.user.role !== "ketuajurusan" && (
           <div className="control">
@@ -136,16 +167,43 @@ const ProductList = () => {
       <div>
         <div className="card has-table">
           <header className="card-header">
-            <p className="card-header-title">
+            <div className="ph">
               <span className="icon">
                 <i className="mdi mdi-table"></i>
               </span>
-              Data Barang
-            </p>
+              <span>Data Barang</span>
+            </div>
+
+            <form onSubmit={searchData}>
+              <div className="card-header-icon field has-addons">
+                <div className="control is-expanded">
+                  <input
+                    id="cari"
+                    type="text"
+                    className="input is-small"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Cari Data..."
+                  />
+                </div>
+                <div className="control">
+                  <button
+                    type="submit"
+                    className="button is-primary is-small"
+                    onClick={getProducts}
+                  >
+                    <i className="mdi mdi-magnify"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <p className="ph1"></p>
+
             <a href="#" className="card-header-icon">
               <span>
                 <button
-                  className="button is-primary is-small"
+                  className="button is-info is-small"
                   onClick={getProducts}
                 >
                   <i className="mdi mdi-reload"></i>
@@ -272,6 +330,30 @@ const ProductList = () => {
                       ))}
                     </tbody>
                   </table>
+                  <p style={{ "margin-left": "10px", "margin-bottom": "10px" }}>
+                    Total Data: {rows} Halaman: {rows ? page + 1 : 0} dari{" "}
+                    {pages}
+                  </p>
+                  <p className="has-text-centered has-text-danger">{msg}</p>
+                  <nav
+                    className="pagination is-centered is-small mb-1"
+                    key={rows}
+                    role="navigation"
+                    aria-label="pagination"
+                  >
+                    <ReactPaginate
+                      previousLabel={"< Prev"}
+                      nextLabel={"Next >"}
+                      pageCount={Math.min(10, pages)}
+                      onPageChange={changePage}
+                      containerClassName={"pagination-list"}
+                      pageLinkClassName={"pagination-link"}
+                      previousLinkClassName={"pagination-previous"}
+                      nextLinkClassName={"pagination-next"}
+                      activeLinkClassName={"pagination-link is-current"}
+                      disabledLinkClassName={"pagination-link is-disabled"}
+                    />
+                  </nav>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
-import "bulma/css/bulma.css";
+// import "bulma/css/bulma.css";
 import "./css/main.min.css";
 // import "./css/main.min.js";
 import axios from "axios";

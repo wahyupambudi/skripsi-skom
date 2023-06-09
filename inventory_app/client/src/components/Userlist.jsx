@@ -56,7 +56,7 @@ const Userlist = () => {
   };
 
   function ConfirmDelete() {
-    return confirm("Hapus Data Ini?");
+    return window.confirm("Hapus Data Ini?");
   }
 
   const deleteUser = async (userId) => {

@@ -56,7 +56,7 @@ const PrintBhp = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    setBhp(response.data);
+    setBhp(response.data.response);
   };
 
   // print

@@ -57,7 +57,7 @@ const PrintProductList = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    setProducts(response.data);
+    setProducts(response.data.response);
   };
 
   // print
