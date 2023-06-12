@@ -13,7 +13,7 @@ const FormAddService = () => {
   const [tgl_buy_brg, setTglbrg] = useState("");
   const [harga_brg, setHrgbrg] = useState("");
   const [status_srv, setStssrv] = useState("");
-  const [tgl_selesai, setTglselesai] = useState("");
+  // const [tgl_selesai, setTglselesai] = useState("");
   // const [file, setFile] = useState("");
   // const [preview, setPreview] = useState("");
   const [msg, setMsg] = useState("");
@@ -63,7 +63,7 @@ const FormAddService = () => {
     formData.append("tgl_mulai", tgl_buy_brg);
     formData.append("harga_srv", harga_brg);
     formData.append("status_srv", status_srv);
-    formData.append("tgl_selesai", "proses");
+    // formData.append("tgl_selesai", "proses");
     try {
       await axios.post("http://localhost:2023/srv", formData, {
         headers: {
@@ -318,7 +318,7 @@ const FormAddService = () => {
                   </div>
                 </div>
               </div>
-              <div className="field is-horizontal ">
+              {/* <div className="field is-horizontal ">
                 <div className="field-label is-normal">
                   <label className="label">Tanggal Selesai</label>
                 </div>
@@ -340,7 +340,7 @@ const FormAddService = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="field is-horizontal ">
                 <div className="field-label">
                   {/* <!-- Left empty for spacing --> */}

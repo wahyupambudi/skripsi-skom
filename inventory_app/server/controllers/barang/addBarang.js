@@ -47,7 +47,7 @@ export const createBarang = async (req, res) => {
         let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
         let newTglMasuk = new Date(tgl_buy_brg).toLocaleDateString();
         let newHarga = new Intl.NumberFormat("id").format(harga_brg);
-
+        let alamat = `${req.protocol}://${req.hostname}/products/detail/${kd_brg}`;
         // membuat qrcode dari data yang sudah di inputkan
         let data = {
           "Kode Barang \t\t\t\t": `${kd_brg}`,
@@ -56,7 +56,8 @@ export const createBarang = async (req, res) => {
           "Lokasi Barang \t\t\t": `${lokasi_brg}`,
           "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
           "Harga Barang \t\t\t": `Rp. ${newHarga}`,
-          "Spesifikasi Barang \t": `${newSpesifikasi}`,
+          "Spesifikasi Barang \t": `${newSpesifikasi}\n`,
+          "URL Barang \t\t\t\t": `${alamat}`,
         };
 
         // membuat perulangan menampilkan berupa teks saja.
@@ -130,6 +131,7 @@ export const createBarang = async (req, res) => {
       let newSpesifikasi = spek_brg.replace(/<[^>]+>/g, " ");
       let newTglMasuk = new Date(tgl_buy_brg).toLocaleDateString();
       let newHarga = new Intl.NumberFormat("id").format(harga_brg);
+      let alamat = `${req.protocol}://${req.hostname}/products/detail/${kd_brg}`;
 
       // membuat qrcode dari data yang sudah di inputkan
       let data = {
@@ -140,6 +142,7 @@ export const createBarang = async (req, res) => {
         "Tanggal Masuk \t\t\t": `${newTglMasuk}`,
         "Harga Barang \t\t\t": `Rp. ${newHarga}`,
         "Spesifikasi Barang \t": `${newSpesifikasi}`,
+        "URL Barang \t\t\t": `${alamat}`,
       };
 
       // membuat perulangan menampilkan berupa teks saja.

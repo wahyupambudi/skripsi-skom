@@ -119,23 +119,60 @@ const PrintQrcodeProducts = () => {
               <div className="columns is-multiline">
                 {barangs.map((product, index) => (
                   <div className="column is-3 is-half-tablet">
-                    <div
-                      className="card box"
-                      style={{ border: "1px solid black" }}
-                    >
-                      <div className="card-image">
-                        <figure className=" image ">
-                          <img src={product.qrcode_url_brg} alt="" />
-                        </figure>
-                      </div>
-                      <div className="is-size-7">
-                        <tr>
-                          <td>Kode : {product.kd_brg}</td>
-                        </tr>
-                        <tr>
-                          <td>Nama : {product.nm_brg}</td>
-                        </tr>
-                      </div>
+                    <div className="is-size-7">
+                      <table style={{ border: "1px solid black" }}>
+                        <tbody>
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid black",
+                                padding: "10px",
+                              }}
+                            >
+                              SMK 6 Bandar Lampung
+                            </td>
+                            <td
+                              style={{ border: "1px solid black" }}
+                              rowspan="3"
+                            >
+                              <div className="card-image">
+                                <img src={product.qrcode_url_brg} alt="" />
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid black",
+                                padding: "10px",
+                              }}
+                            >
+                              <b>Jurusan TKJ</b>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid black",
+                                padding: "10px",
+                              }}
+                            >
+                              <b>id : {product.kd_brg}</b>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                border: "1px solid black",
+                                padding: "10px",
+                              }}
+                              colspan="2"
+                            >
+                              <b>{product.nm_brg}</b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 ))}

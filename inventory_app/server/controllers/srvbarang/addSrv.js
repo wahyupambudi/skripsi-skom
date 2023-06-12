@@ -11,7 +11,7 @@ export const addSrv = async (req, res) => {
     tgl_mulai,
     harga_srv,
     status_srv,
-    tgl_selesai,
+    // tgl_selesai,
   } = req.body;
 
   // mendapatkan semua kode barang
@@ -34,7 +34,7 @@ export const addSrv = async (req, res) => {
       tgl_mulai: tgl_mulai,
       harga_srv: harga_srv,
       status_srv: status_srv,
-      tgl_selesai: tgl_selesai,
+      // tgl_selesai: tgl_selesai,
       userId: req.userId,
     });
     res.status(201).json({ msg: "Data Service Berhasil di Simpan." });
