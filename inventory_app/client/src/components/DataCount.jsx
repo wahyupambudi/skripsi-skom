@@ -64,17 +64,20 @@ const DataCount = () => {
   };
 
   const getCountBarang = async () => {
-    const response = await axiosJWT.get("http://localhost:2023/barangs", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosJWT.get(
+      "http://localhost:2023/barangs?limit=100",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     // console.log(response.data.response);
     setCountBarang(response.data.response.length);
   };
 
   const getCountBarangHP = async () => {
-    const response = await axiosJWT.get("http://localhost:2023/bhp", {
+    const response = await axiosJWT.get("http://localhost:2023/bhp?limit=100", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -84,7 +87,7 @@ const DataCount = () => {
   };
 
   const getCountService = async () => {
-    const response = await axiosJWT.get("http://localhost:2023/srv", {
+    const response = await axiosJWT.get("http://localhost:2023/srv?limit=100", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

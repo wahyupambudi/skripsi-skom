@@ -24,8 +24,15 @@ export const deleteBhp = async (req, res) => {
       const filepath = `./public/images/bhp/${dataBhp.image_bhp}`;
       const filePathQr = `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`;
 
-      fs.unlinkSync(filepath);
-      fs.unlinkSync(filePathQr);
+      if (!fs.existsSync(filepath)) {
+        fs.unlinkSync(filePathQr);
+      } else if (!fs.existsSync(filePathQr)) {
+        fs.unlinkSync(filepath);
+      } else {
+        fs.unlinkSync(filepath);
+        fs.unlinkSync(filePathQr);
+      }
+
       await Bhp.destroy({
         where: {
           id: dataBhp.id,
@@ -39,8 +46,14 @@ export const deleteBhp = async (req, res) => {
       // hapus gambar
       const filepath = `./public/images/bhp/${dataBhp.image_bhp}`;
       const filePathQr = `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`;
-      fs.unlinkSync(filepath);
-      fs.unlinkSync(filePathQr);
+      if (!fs.existsSync(filepath)) {
+        fs.unlinkSync(filePathQr);
+      } else if (!fs.existsSync(filePathQr)) {
+        fs.unlinkSync(filepath);
+      } else {
+        fs.unlinkSync(filepath);
+        fs.unlinkSync(filePathQr);
+      }
       await Bhp.destroy({
         where: {
           [Op.and]: [{ id: dataBhp.id }, { userId: req.userId }],

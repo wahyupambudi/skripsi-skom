@@ -262,10 +262,15 @@ const ServicesList = () => {
                             {product.status_srv}
                           </td>
                         )}
-                        <td data-label="Tanggal Selesai">
-                          {/* {new Date(product.tgl_selesai).toLocaleDateString()} */}
+
+                        {product.tgl_selesai === null && <td>-</td>}
+                        {product.tgl_selesai !== null && (
+                          <td>{product.tgl_selesai}</td>
+                        )}
+                        {/* <td data-label="Tanggal Selesai">
+                          {new Date(product.tgl_selesai).toLocaleDateString()}
                           {product.tgl_selesai}
-                        </td>
+                        </td> */}
 
                         {/* <td>
                   <img src={product.url_brg_srv} width={150} alt="Gambar Barang" />

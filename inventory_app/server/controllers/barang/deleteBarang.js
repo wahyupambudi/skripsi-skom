@@ -26,8 +26,14 @@ export const deleteBarang = async (req, res) => {
       const filepath = `./public/images/barang/${barang.image_brg}`;
       const filePathQr = `./public/images/barang/qrcode/${barang.qrcode_brg}`;
 
-      fs.unlinkSync(filepath);
-      fs.unlinkSync(filePathQr);
+      if (!fs.existsSync(filepath)) {
+        fs.unlinkSync(filePathQr);
+      } else if (!fs.existsSync(filePathQr)) {
+        fs.unlinkSync(filepath);
+      } else {
+        fs.unlinkSync(filepath);
+        fs.unlinkSync(filePathQr);
+      }
       await Barang.destroy({
         where: {
           id: barang.id,
@@ -41,8 +47,14 @@ export const deleteBarang = async (req, res) => {
       // hapus gambar
       const filepath = `./public/images/barang/${barang.image_brg}`;
       const filePathQr = `./public/images/barang/qrcode/${barang.qrcode_brg}`;
-      fs.unlinkSync(filepath);
-      fs.unlinkSync(filePathQr);
+      if (!fs.existsSync(filepath)) {
+        fs.unlinkSync(filePathQr);
+      } else if (!fs.existsSync(filePathQr)) {
+        fs.unlinkSync(filepath);
+      } else {
+        fs.unlinkSync(filepath);
+        fs.unlinkSync(filePathQr);
+      }
       await Barang.destroy({
         where: {
           [Op.and]: [{ id: barang.id }, { userId: req.userId }],

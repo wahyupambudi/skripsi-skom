@@ -181,7 +181,10 @@ const ListDetailBrg = () => {
                               {riwayat.status_srv}
                             </td>
                           )}
-                          <td>{riwayat.tgl_selesai}</td>
+                          {riwayat.tgl_selesai === null && <td>-</td>}
+                          {riwayat.tgl_selesai !== null && (
+                            <td>{riwayat.tgl_selesai}</td>
+                          )}
                           <td>
                             {new Date(riwayat.updatedAt).toLocaleString()}
                           </td>

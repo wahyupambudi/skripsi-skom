@@ -107,7 +107,11 @@ const FormDetailService = () => {
                           Rp. {new Intl.NumberFormat("id").format(harga_brg)}
                         </td>
                         <td>{status_srv}</td>
-                        <td>{new Date(tgl_selesai).toLocaleDateString()}</td>
+
+                        {tgl_selesai === null && <td>-</td>}
+                        {tgl_selesai !== null && (
+                          <td>{new Date(tgl_selesai).toLocaleDateString()}</td>
+                        )}
                       </tr>
                     </tbody>
                   </table>
@@ -163,9 +167,14 @@ const FormDetailService = () => {
                             )}
                           </td>
                           <td>{product.status_srv}</td>
-                          <td>
-                            {new Date(product.tgl_selesai).toLocaleDateString()}
-                          </td>
+                          {product.tgl_selesai === null && <td>-</td>}
+                          {product.tgl_selesai !== null && (
+                            <td>
+                              {new Date(
+                                product.tgl_selesai
+                              ).toLocaleDateString()}
+                            </td>
+                          )}
                           <td>
                             {new Date(product.updatedAt).toLocaleString()}
                           </td>
