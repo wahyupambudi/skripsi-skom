@@ -69,7 +69,7 @@ const srvBrg = db.define(
         notEmpty: true,
       },
     },
-    status_srv: {
+    kondisi_brg: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -82,6 +82,14 @@ const srvBrg = db.define(
       validate: {
         notEmpty: false,
       },
+    },
+    image_srv: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    url_srv: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -97,6 +105,14 @@ const srvBrg = db.define(
         notEmpty: true,
       },
     },
+  },
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ["kd_brg_srv", "uuid_brg_srv"],
+      },
+    ],
   },
   {
     freezeTableName: true,

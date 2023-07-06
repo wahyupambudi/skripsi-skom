@@ -21,6 +21,10 @@ import PrintQrcodeProducts from "./pages/PrintQrcodeProducts";
 import PrintBhp from "./pages/bhp/PrintBhp";
 import PrintQrcodeBhp from "./pages/bhp/PrintQrcodeBhp";
 import PrintServices from "./pages/services/PrintServices";
+import ListTmpBarang from "./pages/temp/ListTmpBarang";
+import ListTmpBhp from "./pages/temp/ListTmpBhp";
+import ListTmpSrv from "./pages/temp/ListTmpSrv";
+import DetailTmpBrg from "./pages/temp/ListDetailBarang";
 
 function App() {
   return (
@@ -50,6 +54,10 @@ function App() {
           <Route path="/bhp/print" element={<PrintBhp />} />
           <Route path="/bhp/qrcode" element={<PrintQrcodeBhp />} />
           <Route path="/services/print" element={<PrintServices />} />
+          <Route path="/tmp/brg" element={<ListTmpBarang />} />
+          <Route path="/tmp/brg/detail/:id" element={<DetailTmpBrg />} />
+          <Route path="/tmp/bhp" element={<ListTmpBhp />} />
+          <Route path="/tmp/srv" element={<ListTmpSrv />} />
         </Routes>
       </BrowserRouter>
     </div>

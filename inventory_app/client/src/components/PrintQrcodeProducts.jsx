@@ -52,11 +52,14 @@ const PrintQrcodeProducts = () => {
   );
 
   const getProducts = async () => {
-    let response = await axiosJWT.get("http://localhost:2023/barangs/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    let response = await axiosJWT.get(
+      "http://localhost:2023/barangs?limit=100",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     setProducts(response.data.response);
   };
 
@@ -70,19 +73,6 @@ const PrintQrcodeProducts = () => {
 
   return (
     <div>
-      {/* <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-        crossorigin="anonymous"
-      ></link> */}
-
-      {/* <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"
-      ></script> */}
-
       <link
         rel="stylesheet"
         href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
@@ -114,7 +104,49 @@ const PrintQrcodeProducts = () => {
                 paddingRight: "15px",
               }}
             >
-              <h4>QR Code Inventaris Barang</h4>
+              <table
+                className="table is-fullwidth is-striped is-hoverable is-fullwidth "
+                style={{ marginBottom: "-1rem" }}
+              >
+                <thead>
+                  <center>
+                    <tr>
+                      <th></th>
+                      <th>
+                        <img
+                          src={require("./tkj.png")}
+                          alt="logo tkj"
+                          style={{ maxWidth: "80px" }}
+                        />
+                      </th>
+                      <th>
+                        <center>
+                          APLIKASI INVENTARIS BARANG TEKNIK KOMPUTER DAN
+                          JARINGAN <br />
+                          SMK NEGERI 6 BANDAR LAMPUNG <br />
+                          <span style={{ fontSize: "12px" }}>
+                            Jl. Laksamana R.E. Martadinata, Sukamaju, Kec. Tlk.
+                            Betung Bar., Kota Bandar Lampung, Lampung 35231
+                          </span>
+                        </center>
+                      </th>
+                      <th></th>
+                    </tr>
+                  </center>
+                </thead>
+              </table>
+              <hr
+                style={{
+                  "background-color": "#000",
+                  margin: "0.2rem 0",
+                }}
+              />
+              <hr
+                style={{
+                  "background-color": "#000",
+                  margin: "0.2rem 0",
+                }}
+              />
               <br />
               <div className="columns is-multiline">
                 {barangs.map((product, index) => (

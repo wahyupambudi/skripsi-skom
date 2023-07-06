@@ -42,8 +42,20 @@ const Login = () => {
             <div className="columns is-centered">
               <div className="column is-5">
                 <form onSubmit={Auth} className="box">
-                  {isError && <p className="has-text-centered">{message}</p>}
-                  <h1 className="title is-3">Sign In</h1>
+                  {isError && (
+                    <p className="has-text-danger has-text-centered">
+                      {message}
+                    </p>
+                  )}
+                  <h1 className="subtitle is-5" style={{ textAlign: "center" }}>
+                    Sistem Inventaris Barang TKJ SMKN 6 BDL
+                  </h1>
+                  <hr
+                    style={{
+                      "background-color": "#48c78e",
+                      margin: "0.5rem 0",
+                    }}
+                  />
                   <div className="field">
                     <label className="label">Email</label>
                     <div className="control">

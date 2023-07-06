@@ -93,19 +93,49 @@ const PrintBhp = () => {
       <div>
         <div ref={componentPDF} style={{ width: "100%" }}>
           <div className="card has-table">
-            <header className="card-header">
-              <p className="card-header-title">
-                <span className="icon">
-                  <i className="mdi mdi-table"></i>
-                </span>
-                Data Barang Habis Pakai
-              </p>
-              <a href="#" className="card-header-icon">
-                <span className="icon">
-                  <i className="mdi mdi-reload"></i>
-                </span>
-              </a>
-            </header>
+            <table
+              className="table is-fullwidth is-striped is-hoverable is-fullwidth "
+              style={{ marginBottom: "-1rem" }}
+            >
+              <thead>
+                <center>
+                  <tr>
+                    <th></th>
+                    <th>
+                      <img
+                        src={require("../tkj.png")}
+                        alt="logo tkj"
+                        style={{ maxWidth: "80px" }}
+                      />
+                    </th>
+                    <th>
+                      <center>
+                        APLIKASI INVENTARIS BARANG TEKNIK KOMPUTER DAN JARINGAN{" "}
+                        <br />
+                        SMK NEGERI 6 BANDAR LAMPUNG <br />
+                        <span style={{ fontSize: "12px" }}>
+                          Jl. Laksamana R.E. Martadinata, Sukamaju, Kec. Tlk.
+                          Betung Bar., Kota Bandar Lampung, Lampung 35231
+                        </span>
+                      </center>
+                    </th>
+                    <th></th>
+                  </tr>
+                </center>
+              </thead>
+            </table>
+            <hr
+              style={{
+                "background-color": "#000",
+                margin: "0.2rem 0",
+              }}
+            />
+            <hr
+              style={{
+                "background-color": "#000",
+                margin: "0.2rem 0",
+              }}
+            />
             <div className="card-content">
               <div className="b-table has-pagination is-size-7">
                 <div className="table-wrapper has-mobile-cards">
@@ -154,7 +184,7 @@ const PrintBhp = () => {
                           <td>
                             <img
                               src={product.url_bhp}
-                              width={150}
+                              width={100}
                               alt="Gambar Barang"
                             />
                           </td>

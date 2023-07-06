@@ -152,9 +152,14 @@ const ProductList = () => {
         <div className="control">
           <Link
             to="/products/qrcode"
-            className="button is-danger is-outlined mb-2"
+            className="button is-info is-outlined mb-2"
           >
             Cetak QrCode
+          </Link>
+        </div>
+        <div className="control">
+          <Link to="/tmp/brg" className="button is-danger is-outlined mb-2">
+            Data Di Hapus
           </Link>
         </div>
       </div>
@@ -214,11 +219,11 @@ const ProductList = () => {
                       <tr>
                         <th>No</th>
                         <th>Kode</th>
-                        <th>Nama</th>
-                        <th>Spesifikasi</th>
+                        <th>Nama Barang</th>
                         <th>Kondisi</th>
+                        <th style={{ textAlign: "center" }}>Total Service</th>
                         <th>Lokasi</th>
-                        <th>Tanggal</th>
+                        <th>Perolehan</th>
                         <th>Harga</th>
                         <th>Aksi</th>
                       </tr>
@@ -231,14 +236,19 @@ const ProductList = () => {
                             <b>{product.kd_brg}</b>
                           </td>
                           <td data-label="Nama Barang">{product.nm_brg}</td>
-                          <td
+                          {/* <td
                             data-label="Spesifikasi"
                             dangerouslySetInnerHTML={{
                               __html: product.spek_brg,
                             }}
-                          ></td>
-                          {/* <td>{product.spek_brg}</td> */}
+                          ></td> */}
                           <td data-label="Kondisi">{product.kondisi_brg}</td>
+                          <td
+                            data-label="Total Service"
+                            style={{ textAlign: "center" }}
+                          >
+                            {product.service_brg} Kali
+                          </td>
                           <td data-label="Lokasi Barang">
                             {product.lokasi_brg}
                           </td>

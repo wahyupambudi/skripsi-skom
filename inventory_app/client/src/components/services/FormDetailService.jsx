@@ -11,8 +11,9 @@ const FormDetailService = () => {
   const [lokasi_brg, setLokbrg] = useState("");
   const [tgl_mulai, setTglbrg] = useState("");
   const [harga_brg, setHrgbrg] = useState("");
-  const [status_srv, setStssrv] = useState("");
+  const [kondisi_brg, setStssrv] = useState("");
   const [tgl_selesai, setTglselesai] = useState("");
+  const [url_srv, setUrlSrv] = useState("");
   const [msg, setMsg] = useState("");
   // const navigate = useNavigate();
   const { id } = useParams();
@@ -28,8 +29,9 @@ const FormDetailService = () => {
         setLokbrg(response.data.lokasi_srv);
         setTglbrg(response.data.tgl_mulai);
         setHrgbrg(response.data.harga_srv);
-        setStssrv(response.data.status_srv);
+        setStssrv(response.data.kondisi_brg);
         setTglselesai(response.data.tgl_selesai);
+        setUrlSrv(response.data.url_srv);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -84,6 +86,7 @@ const FormDetailService = () => {
                         <th>Harga</th>
                         <th>Status Service</th>
                         <th>Tanggal Selesai</th>
+                        <th>Bukti Service</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -106,12 +109,15 @@ const FormDetailService = () => {
                         <td>
                           Rp. {new Intl.NumberFormat("id").format(harga_brg)}
                         </td>
-                        <td>{status_srv}</td>
+                        <td>{kondisi_brg}</td>
 
                         {tgl_selesai === null && <td>-</td>}
                         {tgl_selesai !== null && (
                           <td>{new Date(tgl_selesai).toLocaleDateString()}</td>
                         )}
+                        <td>
+                          <img src={url_srv} width={100} alt="bukti service" />
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -166,7 +172,7 @@ const FormDetailService = () => {
                               product.harga_srv
                             )}
                           </td>
-                          <td>{product.status_srv}</td>
+                          <td>{product.kondisi_brg}</td>
                           {product.tgl_selesai === null && <td>-</td>}
                           {product.tgl_selesai !== null && (
                             <td>

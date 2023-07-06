@@ -12,10 +12,10 @@ const FormAddService = () => {
   const [lokasi_brg, setLokbrg] = useState("");
   const [tgl_buy_brg, setTglbrg] = useState("");
   const [harga_brg, setHrgbrg] = useState("");
-  const [status_srv, setStssrv] = useState("");
+  const [kondisi_brg, setStssrv] = useState("");
   // const [tgl_selesai, setTglselesai] = useState("");
-  // const [file, setFile] = useState("");
-  // const [preview, setPreview] = useState("");
+  const [file, setFile] = useState("");
+  const [preview, setPreview] = useState("");
   const [msg, setMsg] = useState("");
   const [pesan, setPesan] = useState("");
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const FormAddService = () => {
       // setLokbrg(response.data.lokasi_brg);
       // setTglbrg(response.data.tgl_buy_brg);
       // setHrgbrg(response.data.harga_brg);
-      // setStssrv(response.data.status_srv);
+      // setStssrv(response.data.kondisi_brg);
       // setFile(response.data.image_brg);
       // setPreview(response.data.url_brg);
     } catch (error) {
@@ -45,16 +45,16 @@ const FormAddService = () => {
     }
   };
 
-  // const loadImage = (e) => {
-  //   const image = e.target.files[0];
-  //   setFile(image);
-  //   setPreview(URL.createObjectURL(image));
-  // };
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
+  };
 
   const saveProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    // formData.append("file", file);
+    formData.append("file", file);
     formData.append("kd_brg_srv", kd_brg);
     formData.append("nm_brg_srv", nm_brg);
     formData.append("spek_brg_srv", spek_brg);
@@ -62,7 +62,7 @@ const FormAddService = () => {
     formData.append("lokasi_srv", lokasi_brg);
     formData.append("tgl_mulai", tgl_buy_brg);
     formData.append("harga_srv", harga_brg);
-    formData.append("status_srv", status_srv);
+    formData.append("kondisi_brg", kondisi_brg);
     // formData.append("tgl_selesai", "proses");
     try {
       await axios.post("http://localhost:2023/srv", formData, {
@@ -72,10 +72,19 @@ const FormAddService = () => {
       });
       navigate("/services");
     } catch (error) {
-      if (error.response.data.msg === "Barang sudah di proses service") {
+      if (
+        error.response.data.msg ===
+        "Barang sudah pernah di proses pada tanggal yang sama"
+      ) {
         setMsg(error.response.data.msg);
         alert("Gagal Service Barang.");
-        alert("Barang sudah di Service.");
+        alert("Barang sudah di Service dengan tanggal yang sama.");
+      } else if (
+        error.response.data.msg === "Selesaikan Proses Service Sebelumnya!"
+      ) {
+        setMsg(error.response.data.msg);
+        alert("Gagal Service Barang.");
+        alert("Selesaikan Proses Service Sebelumnya!");
       } else if (error.response.data.pesan === "Akses Tidak Di izinkan") {
         setPesan(error.response.data.pesan);
         // console.log(error.response.data.pesan);
@@ -302,13 +311,14 @@ const FormAddService = () => {
                     <p className="control is-expanded has-icons-left">
                       <div className="select">
                         <select
-                          value={status_srv}
+                          value={kondisi_brg}
                           onChange={(e) => setStssrv(e.target.value)}
+                          required
                         >
-                          <option>Pilih Status</option>
+                          <option value="">Pilih Status</option>
                           <option value="Proses">Proses</option>
-                          <option value="Selesai">Selesai</option>
-                          <option value="Rusak">Rusak</option>
+                          {/* <option value="Selesai">Selesai</option> */}
+                          {/* <option value="Rusak">Rusak</option> */}
                         </select>
                       </div>
                       <span className="icon is-small is-left">
@@ -341,6 +351,28 @@ const FormAddService = () => {
                   </div>
                 </div>
               </div> */}
+              <div className="field is-horizontal ">
+                <div className="field-label is-normal">
+                  <label className="label">Foto Bukti</label>
+                </div>
+                <div className="field-body">
+                  <div className="file">
+                    <input
+                      type="file"
+                      className="input"
+                      onChange={loadImage}
+                      placeholder="Foto Bukti"
+                    />
+                  </div>
+                  {preview ? (
+                    <figure className="ml-6 box">
+                      <img src={preview} width={200} alt="Preview Image" />
+                    </figure>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
               <div className="field is-horizontal ">
                 <div className="field-label">
                   {/* <!-- Left empty for spacing --> */}

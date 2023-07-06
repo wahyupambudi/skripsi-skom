@@ -24,6 +24,22 @@ export const deleteBhp = async (req, res) => {
       const filepath = `./public/images/bhp/${dataBhp.image_bhp}`;
       const filePathQr = `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`;
 
+      fs.copyFile(
+        `./public/images/bhp/${dataBhp.image_bhp}`,
+        `./public/images/temp/bhp/${dataBhp.image_bhp}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
+      fs.copyFile(
+        `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`,
+        `./public/images/temp/bhp/qrcode/${dataBhp.qrcode_bhp}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
       if (!fs.existsSync(filepath)) {
         fs.unlinkSync(filePathQr);
       } else if (!fs.existsSync(filePathQr)) {
@@ -46,6 +62,23 @@ export const deleteBhp = async (req, res) => {
       // hapus gambar
       const filepath = `./public/images/bhp/${dataBhp.image_bhp}`;
       const filePathQr = `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`;
+
+      fs.copyFile(
+        `./public/images/bhp/${dataBhp.image_bhp}`,
+        `./public/images/temp/bhp/${dataBhp.image_bhp}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
+      fs.copyFile(
+        `./public/images/bhp/qrcode/${dataBhp.qrcode_bhp}`,
+        `./public/images/temp/bhp/qrcode/${dataBhp.qrcode_bhp}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
       if (!fs.existsSync(filepath)) {
         fs.unlinkSync(filePathQr);
       } else if (!fs.existsSync(filePathQr)) {

@@ -48,6 +48,10 @@ const hisBrg = db.define(
         notEmpty: true,
       },
     },
+    service_brg: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     lokasi_brg: {
       type: DataTypes.STRING,
       allowNull: false,

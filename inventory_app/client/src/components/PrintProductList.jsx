@@ -52,11 +52,14 @@ const PrintProductList = () => {
   );
 
   const getProducts = async () => {
-    let response = await axiosJWT.get("http://localhost:2023/barangs/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    let response = await axiosJWT.get(
+      "http://localhost:2023/barangs?limit=100",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     setProducts(response.data.response);
   };
 
@@ -106,7 +109,50 @@ const PrintProductList = () => {
       <div>
         <div ref={componentPDF} style={{ width: "100%" }}>
           <div className="card has-table">
-            <header className="card-header">
+            <table
+              className="table is-fullwidth is-striped is-hoverable is-fullwidth "
+              style={{ marginBottom: "-1rem" }}
+            >
+              <thead>
+                <center>
+                  <tr>
+                    <th></th>
+                    <th>
+                      <img
+                        src={require("./tkj.png")}
+                        alt="logo tkj"
+                        style={{ maxWidth: "80px" }}
+                      />
+                    </th>
+                    <th>
+                      <center>
+                        APLIKASI INVENTARIS BARANG TEKNIK KOMPUTER DAN JARINGAN{" "}
+                        <br />
+                        SMK NEGERI 6 BANDAR LAMPUNG <br />
+                        <span style={{ fontSize: "12px" }}>
+                          Jl. Laksamana R.E. Martadinata, Sukamaju, Kec. Tlk.
+                          Betung Bar., Kota Bandar Lampung, Lampung 35231
+                        </span>
+                      </center>
+                    </th>
+                    <th></th>
+                  </tr>
+                </center>
+              </thead>
+            </table>
+            <hr
+              style={{
+                "background-color": "#000",
+                margin: "0.2rem 0",
+              }}
+            />
+            <hr
+              style={{
+                "background-color": "#000",
+                margin: "0.2rem 0",
+              }}
+            />
+            {/* <header className="card-header">
               <p className="card-header-title">
                 <span className="icon">
                   <i className="mdi mdi-table"></i>
@@ -118,7 +164,7 @@ const PrintProductList = () => {
                   <i className="mdi mdi-reload"></i>
                 </span>
               </a>
-            </header>
+            </header> */}
             <div className="card-content">
               <div className="b-table has-pagination is-size-7">
                 <div className="table-wrapper has-mobile-cards">

@@ -19,10 +19,12 @@ const ServicesList = () => {
   const [msg, setMsg] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [barangs, setProducts] = useState([]);
+  const [priceSrv, setPriceSrv] = useState([]);
 
   useEffect(() => {
     RefreshToken();
     getProducts();
+    getPriceSrv();
   }, [page, keyword]);
 
   const RefreshToken = async () => {
@@ -72,6 +74,15 @@ const ServicesList = () => {
     setRows(response.data.totalRows);
   };
 
+  const getPriceSrv = async () => {
+    const response = await axiosJWT.get("http://localhost:2023/srv/hrg", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setPriceSrv(response.data);
+  };
+
   const changePage = ({ selected }) => {
     setPage(selected);
     if (selected === 9) {
@@ -112,6 +123,7 @@ const ServicesList = () => {
     //   alert("Asdasd");
     // }
     getProducts();
+    getPriceSrv();
   };
 
   return (
@@ -141,6 +153,11 @@ const ServicesList = () => {
             className="button is-info is-outlined mb-2"
           >
             Cetak PDF
+          </Link>
+        </div>
+        <div className="control">
+          <Link to="/tmp/srv" className="button is-danger is-outlined mb-2">
+            Data Di Hapus
           </Link>
         </div>
       </div>
@@ -183,7 +200,7 @@ const ServicesList = () => {
               <span>
                 <button
                   className="button is-info is-small"
-                  onClick={getProducts}
+                  onClick={(getProducts, getPriceSrv)}
                 >
                   <i className="mdi mdi-reload"></i>
                 </button>
@@ -238,28 +255,28 @@ const ServicesList = () => {
                             product.harga_srv
                           )}
                         </td>
-                        {product.status_srv === "Proses" && (
+                        {product.kondisi_brg === "Proses" && (
                           <td
                             data-label="Status"
                             className="button is-warning is-rounded is-small"
                           >
-                            {product.status_srv}
+                            {product.kondisi_brg}
                           </td>
                         )}
-                        {product.status_srv === "Selesai" && (
+                        {product.kondisi_brg === "Selesai" && (
                           <td
                             data-label="Status"
                             className="button is-primary is-rounded is-small"
                           >
-                            {product.status_srv}
+                            {product.kondisi_brg}
                           </td>
                         )}
-                        {product.status_srv === "Rusak" && (
+                        {product.kondisi_brg === "Rusak" && (
                           <td
                             data-label="Status"
                             className="button is-danger is-rounded is-small"
                           >
-                            {product.status_srv}
+                            {product.kondisi_brg}
                           </td>
                         )}
 
@@ -267,27 +284,11 @@ const ServicesList = () => {
                         {product.tgl_selesai !== null && (
                           <td>{product.tgl_selesai}</td>
                         )}
-                        {/* <td data-label="Tanggal Selesai">
-                          {new Date(product.tgl_selesai).toLocaleDateString()}
-                          {product.tgl_selesai}
-                        </td> */}
 
-                        {/* <td>
-                  <img src={product.url_brg_srv} width={150} alt="Gambar Barang" />
-                </td> */}
-                        {/* <td>
-                  <a href={product.qrcode_url_brg_srv} target="_blank">
-                    <img
-                      src={product.qrcode_url_brg_srv}
-                      width={100}
-                      alt="QrCode"
-                    />
-                  </a>
-                </td> */}
                         {user && user.user.role !== "ketuajurusan" && (
                           <td>
                             <Link
-                              to={`/services/edit/${product.kd_brg_srv}`}
+                              to={`/services/edit/${product.uuid_brg_srv}`}
                               className="button is-small is-warning"
                               title="Edit Data"
                             >
@@ -298,7 +299,7 @@ const ServicesList = () => {
                             <span className="ml-1"></span>
 
                             <Link
-                              to={`/services/detail/${product.kd_brg_srv}`}
+                              to={`/services/detail/${product.uuid_brg_srv}`}
                               className="button is-small is-info"
                               title="Detail Data"
                             >
@@ -309,7 +310,9 @@ const ServicesList = () => {
                             <span className="ml-1"></span>
 
                             <button
-                              onClick={() => deleteProduct(product.kd_brg_srv)}
+                              onClick={() =>
+                                deleteProduct(product.uuid_brg_srv)
+                              }
                               className="button is-small is-danger"
                               title="Hapus Data"
                             >
@@ -335,6 +338,22 @@ const ServicesList = () => {
                         )}
                       </tr>
                     ))}
+                    <br />
+                    <tr style={{ fontWeight: "bold" }}>
+                      <td data-label="Total Biaya" colspan="7">
+                        <center>Total Biaya</center>
+                      </td>
+                      <td data-label="Total Biaya" colspan="3">
+                        {priceSrv.map((harga) => (
+                          <div align="center">
+                            Rp.{" "}
+                            {new Intl.NumberFormat("id").format(
+                              harga.totalAssetAmount
+                            )}
+                          </div>
+                        ))}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
                 <p style={{ "margin-left": "10px", "margin-bottom": "10px" }}>

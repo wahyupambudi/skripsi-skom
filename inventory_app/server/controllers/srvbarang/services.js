@@ -91,7 +91,7 @@ export const getSrv = async (req, res) => {
     //       "lokasi_srv",
     //       "tgl_mulai",
     //       "harga_srv",
-    //       "status_srv",
+    //       "kondisi_brg",
     //       "tgl_selesai",
     //       "updatedAt",
     //     ],
@@ -110,12 +110,38 @@ export const getSrv = async (req, res) => {
   }
 };
 
+export const getTotSrv = async (req, res) => {
+  try {
+    let response;
+    // req.role berasal dari middleware ketika login
+    if (req.role) {
+      response = await srvBrg.findAll({
+        attributes: [
+          [
+            Sequelize.fn(
+              "SUM",
+              Sequelize.cast(Sequelize.col("harga_srv"), "INTEGER")
+            ),
+            "totalAssetAmount",
+          ],
+        ],
+      });
+    }
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 // membuat fungsi untuk getBarang berdasarkan id/uuid barang
 export const getServiceById = async (req, res) => {
   try {
     const serviceBarang = await srvBrg.findOne({
       where: {
-        kd_brg_srv: req.params.id,
+        [Op.or]: [
+          { kd_brg_srv: req.params.id },
+          { uuid_brg_srv: req.params.id },
+        ],
       },
     });
     // jika barang tidak ditemukan
@@ -136,8 +162,10 @@ export const getServiceById = async (req, res) => {
           "lokasi_srv",
           "tgl_mulai",
           "harga_srv",
-          "status_srv",
+          "kondisi_brg",
           "tgl_selesai",
+          "image_srv",
+          "url_srv",
           "updatedAt",
         ],
         where: {

@@ -12,10 +12,12 @@ const PrintServices = () => {
   // const [msg, setMsg] = useState("");
   const { user } = useSelector((state) => state.auth);
   const [barangs, setProducts] = useState([]);
+  const [priceSrv, setPriceSrv] = useState([]);
 
   useEffect(() => {
     RefreshToken();
     getProducts();
+    getPriceSrv();
   }, []);
 
   const RefreshToken = async () => {
@@ -59,6 +61,15 @@ const PrintServices = () => {
     setProducts(response.data.response);
   };
 
+  const getPriceSrv = async () => {
+    const response = await axiosJWT.get("http://localhost:2023/srv/hrg", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setPriceSrv(response.data);
+  };
+
   // print
   const componentPDF = useRef();
   const generatePDF = useReactToPrint({
@@ -98,19 +109,49 @@ const PrintServices = () => {
       <div>
         <div ref={componentPDF} style={{ width: "100%" }}>
           <div className="card has-table">
-            <header className="card-header">
-              <p className="card-header-title">
-                <span className="icon">
-                  <i className="mdi mdi-table"></i>
-                </span>
-                Data Services
-              </p>
-              <a href="#" className="card-header-icon">
-                <span className="icon">
-                  <i className="mdi mdi-reload"></i>
-                </span>
-              </a>
-            </header>
+            <table
+              className="table is-fullwidth is-striped is-hoverable is-fullwidth "
+              style={{ marginBottom: "-1rem" }}
+            >
+              <thead>
+                <center>
+                  <tr>
+                    <th></th>
+                    <th>
+                      <img
+                        src={require("../tkj.png")}
+                        alt="logo tkj"
+                        style={{ maxWidth: "80px" }}
+                      />
+                    </th>
+                    <th>
+                      <center>
+                        APLIKASI INVENTARIS BARANG TEKNIK KOMPUTER DAN JARINGAN{" "}
+                        <br />
+                        SMK NEGERI 6 BANDAR LAMPUNG <br />
+                        <span style={{ fontSize: "12px" }}>
+                          Jl. Laksamana R.E. Martadinata, Sukamaju, Kec. Tlk.
+                          Betung Bar., Kota Bandar Lampung, Lampung 35231
+                        </span>
+                      </center>
+                    </th>
+                    <th></th>
+                  </tr>
+                </center>
+              </thead>
+            </table>
+            <hr
+              style={{
+                "background-color": "#000",
+                margin: "0.2rem 0",
+              }}
+            />
+            <hr
+              style={{
+                "background-color": "#000",
+                margin: "0.2rem 0",
+              }}
+            />
             <div className="card-content">
               <div className="b-table has-pagination is-size-7 ">
                 <div className="table-wrapper has-mobile-cards">
@@ -127,6 +168,7 @@ const PrintServices = () => {
                         <th>Harga</th>
                         <th>Status</th>
                         <th>Tgl Selesai</th>
+                        <th>Foto Bukti</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -162,36 +204,63 @@ const PrintServices = () => {
                               product.harga_srv
                             )}
                           </td>
-                          {product.status_srv === "Proses" && (
+                          {product.kondisi_brg === "Proses" && (
                             <td
                               data-label="Status"
                               className="button is-warning is-rounded is-small"
                             >
-                              {product.status_srv}
+                              {product.kondisi_brg}
                             </td>
                           )}
-                          {product.status_srv === "Selesai" && (
+                          {product.kondisi_brg === "Selesai" && (
                             <td
                               data-label="Status"
                               className="button is-primary is-rounded is-small"
                             >
-                              {product.status_srv}
+                              {product.kondisi_brg}
                             </td>
                           )}
-                          {product.status_srv === "Rusak" && (
+                          {product.kondisi_brg === "Rusak" && (
                             <td
                               data-label="Status"
                               className="button is-danger is-rounded is-small"
                             >
-                              {product.status_srv}
+                              {product.kondisi_brg}
                             </td>
                           )}
-                          <td data-label="Tanggal Selesai">
-                            {/* {new Date(product.tgl_selesai).toLocaleDateString()} */}
-                            {product.tgl_selesai}
+                          {product.tgl_selesai === null && (
+                            <td data-label="Tanggal Selesai">-</td>
+                          )}
+                          {product.tgl_selesai !== null && (
+                            <td data-label="Tanggal Selesai">
+                              {" "}
+                              {product.tgl_selesai}
+                            </td>
+                          )}
+                          <td>
+                            <img
+                              src={product.url_srv}
+                              width={100}
+                              alt="bukti service"
+                            />
                           </td>
                         </tr>
                       ))}
+                      <tr style={{ fontWeight: "bold" }}>
+                        <td data-label="Total Biaya" colspan="7">
+                          <center>Total Biaya</center>
+                        </td>
+                        <td data-label="Total Biaya" colspan="3">
+                          {priceSrv.map((harga) => (
+                            <div align="center">
+                              Rp.{" "}
+                              {new Intl.NumberFormat("id").format(
+                                harga.totalAssetAmount
+                              )}
+                            </div>
+                          ))}
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>

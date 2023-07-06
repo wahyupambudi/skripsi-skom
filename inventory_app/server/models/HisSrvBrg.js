@@ -70,7 +70,7 @@ const hisSrvBrg = db.define(
         notEmpty: true,
       },
     },
-    status_srv: {
+    kondisi_brg: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -83,6 +83,14 @@ const hisSrvBrg = db.define(
       validate: {
         notEmpty: false,
       },
+    },
+    image_srv: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    url_srv: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -100,6 +108,14 @@ const hisSrvBrg = db.define(
     },
   },
   {
+    indexes: [
+      {
+        unique: false,
+        fields: ["kd_brg_srv", "uuid_brg_srv"],
+      },
+    ],
+  },
+  {
     freezeTableName: true,
   }
 );
@@ -107,11 +123,19 @@ const hisSrvBrg = db.define(
 Users.hasMany(hisSrvBrg);
 hisSrvBrg.belongsTo(Users, { foreignKey: "userId" });
 // hisSrvBrg.belongsTo(Barangs, { foreignKey: "srvId" });
-hisSrvBrg.belongsTo(srvBrg, {
-  foreignKey: "kd_brg_srv",
-  targetKey: "kd_brg_srv",
-  onDelete: "CASCADE",
-});
+hisSrvBrg.belongsTo(
+  srvBrg,
+  // {
+  //   foreignKey: "kd_brg_srv",
+  //   targetKey: "kd_brg_srv",
+  //   onDelete: "CASCADE",
+  // },
+  {
+    foreignKey: "uuid_brg_srv",
+    targetKey: "uuid_brg_srv",
+    onDelete: "CASCADE",
+  }
+);
 
 export default hisSrvBrg;
 

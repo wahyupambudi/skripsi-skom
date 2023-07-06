@@ -9,6 +9,7 @@ const ListDetailBrg = () => {
   const [nm_brg, setNmbrg] = useState("");
   const [spek_brg, setSpekbrg] = useState("");
   const [kondisi_brg, setKonbrg] = useState("");
+  const [service_brg, setSrvbrg] = useState("");
   const [lokasi_brg, setLokbrg] = useState("");
   const [tgl_buy_brg, setTglbrg] = useState("");
   const [harga_brg, setHrgbrg] = useState("");
@@ -26,6 +27,7 @@ const ListDetailBrg = () => {
         setNmbrg(response.data.nm_brg);
         setSpekbrg(response.data.spek_brg);
         setKonbrg(response.data.kondisi_brg);
+        setSrvbrg(response.data.service_brg);
         setLokbrg(response.data.lokasi_brg);
         setTglbrg(response.data.tgl_buy_brg);
         setHrgbrg(response.data.harga_brg);
@@ -86,8 +88,9 @@ const ListDetailBrg = () => {
                         <th>Nama Barang</th>
                         <th>Spesifikasi</th>
                         <th>Kondisi</th>
+                        <th>Service</th>
                         <th>Lokasi</th>
-                        <th>Perolahan</th>
+                        <th>Perolehan</th>
                         <th>Harga</th>
                         <th>Gambar</th>
                         <th>Qrcode</th>
@@ -102,8 +105,8 @@ const ListDetailBrg = () => {
                             __html: spek_brg,
                           }}
                         ></td>
-                        {/* <td>{spek_brg}</td> */}
                         <td>{kondisi_brg}</td>
+                        <td>{service_brg}</td>
                         <td>{lokasi_brg}</td>
                         <td>{tgl_buy_brg}</td>
                         <td>
@@ -166,19 +169,19 @@ const ListDetailBrg = () => {
                               riwayat.harga_srv
                             )}
                           </td>
-                          {riwayat.status_srv === "Proses" && (
+                          {riwayat.kondisi_brg === "Proses" && (
                             <td className="has-text-warning-dark ">
-                              {riwayat.status_srv}
+                              {riwayat.kondisi_brg}
                             </td>
                           )}
-                          {riwayat.status_srv === "Selesai" && (
+                          {riwayat.kondisi_brg === "Selesai" && (
                             <td className="has-text-primary-dark">
-                              {riwayat.status_srv}
+                              {riwayat.kondisi_brg}
                             </td>
                           )}
-                          {riwayat.status_srv === "Rusak" && (
+                          {riwayat.kondisi_brg === "Rusak" && (
                             <td className="has-text-danger-dark">
-                              {riwayat.status_srv}
+                              {riwayat.kondisi_brg}
                             </td>
                           )}
                           {riwayat.tgl_selesai === null && <td>-</td>}
@@ -209,6 +212,7 @@ const ListDetailBrg = () => {
                         <th>Nama</th>
                         <th>Spesifikasi</th>
                         <th>Kondisi</th>
+                        <th>Total Service</th>
                         <th>Lokasi</th>
                         <th>Tanggal</th>
                         <th>Harga</th>
@@ -225,8 +229,8 @@ const ListDetailBrg = () => {
                               __html: product.spek_brg,
                             }}
                           ></td>
-                          {/* <td>{product.spek_brg}</td> */}
                           <td>{product.kondisi_brg}</td>
+                          <td>{product.service_brg}</td>
                           <td>{product.lokasi_brg}</td>
                           <td>{product.tgl_buy_brg}</td>
                           <td>

@@ -131,8 +131,13 @@ const BhpList = () => {
           </Link>
         </div>
         <div className="control">
-          <Link to="/bhp/qrcode" className="button is-danger is-outlined mb-2">
+          <Link to="/bhp/qrcode" className="button is-info is-outlined mb-2">
             Cetak QrCode
+          </Link>
+        </div>
+        <div className="control">
+          <Link to="/tmp/bhp" className="button is-danger is-outlined mb-2">
+            Data Di Hapus
           </Link>
         </div>
       </div>

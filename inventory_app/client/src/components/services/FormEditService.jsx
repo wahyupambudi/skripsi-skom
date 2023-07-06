@@ -12,10 +12,10 @@ const FormEditService = () => {
   const [lokasi_brg, setLokbrg] = useState("");
   const [tgl_buy_brg, setTglbrg] = useState("");
   const [harga_brg, setHrgbrg] = useState("");
-  const [status_srv, setStssrv] = useState("");
+  const [kondisi_brg, setStssrv] = useState("");
   const [tgl_selesai, setTglselesai] = useState("");
-  // const [file, setFile] = useState("");
-  // const [preview, setPreview] = useState("");
+  const [file, setFile] = useState("");
+  const [preview, setPreview] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -34,10 +34,10 @@ const FormEditService = () => {
       setLokbrg(response.data.lokasi_srv);
       setTglbrg(response.data.tgl_mulai);
       setHrgbrg(response.data.harga_srv);
-      setStssrv(response.data.status_srv);
+      setStssrv(response.data.kondisi_brg);
       setTglselesai(response.data.tgl_selesai);
-      // setFile(response.data.image_brg);
-      // setPreview(response.data.url_brg);
+      setFile(response.data.image_srv);
+      setPreview(response.data.url_srv);
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
@@ -45,16 +45,16 @@ const FormEditService = () => {
     }
   };
 
-  // const loadImage = (e) => {
-  //   const image = e.target.files[0];
-  //   setFile(image);
-  //   setPreview(URL.createObjectURL(image));
-  // };
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
+  };
 
   const saveProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    // formData.append("file", file);
+    formData.append("file", file);
     formData.append("kd_brg_srv", kd_brg);
     formData.append("nm_brg_srv", nm_brg);
     formData.append("spek_brg_srv", spek_brg);
@@ -62,7 +62,7 @@ const FormEditService = () => {
     formData.append("lokasi_srv", lokasi_brg);
     formData.append("tgl_mulai", tgl_buy_brg);
     formData.append("harga_srv", harga_brg);
-    formData.append("status_srv", status_srv);
+    formData.append("kondisi_brg", kondisi_brg);
     formData.append("tgl_selesai", tgl_selesai);
     try {
       await axios.patch(`http://localhost:2023/srv/${id}`, formData, {
@@ -292,10 +292,11 @@ const FormEditService = () => {
                     <p className="control is-expanded has-icons-left">
                       <div className="select">
                         <select
-                          value={status_srv}
+                          value={kondisi_brg}
                           onChange={(e) => setStssrv(e.target.value)}
+                          required
                         >
-                          <option>Pilih Status</option>
+                          <option value="">Pilih Status</option>
                           <option value="Proses">Proses</option>
                           <option value="Selesai">Selesai</option>
                           <option value="Rusak">Rusak</option>
@@ -328,6 +329,28 @@ const FormEditService = () => {
                       </span>
                     </p>
                   </div>
+                </div>
+              </div>
+              <div className="field is-horizontal ">
+                <div className="field-label is-normal">
+                  <label className="label">Foto Bukti</label>
+                </div>
+                <div className="field-body">
+                  <div className="file">
+                    <input
+                      type="file"
+                      className="input"
+                      onChange={loadImage}
+                      placeholder="Foto Bukti"
+                    />
+                  </div>
+                  {preview ? (
+                    <figure className="ml-6 box">
+                      <img src={preview} width={200} alt="Preview Image" />
+                    </figure>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div className="field is-horizontal ">

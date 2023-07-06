@@ -112,6 +112,29 @@ export const getBhp = async (req, res) => {
   }
 };
 
+export const getHrgBhp = async (req, res) => {
+  try {
+    let response;
+    // req.role berasal dari middleware ketika login
+    if (req.role) {
+      response = await Bhp.findAll({
+        attributes: [
+          [
+            Sequelize.fn(
+              "SUM",
+              Sequelize.cast(Sequelize.col("harga_bhp"), "INTEGER")
+            ),
+            "totalAssetAmount",
+          ],
+        ],
+      });
+    }
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 // membuat fungsi untuk getBarang berdasarkan id/uuid barang
 export const getBhpById = async (req, res) => {
   try {

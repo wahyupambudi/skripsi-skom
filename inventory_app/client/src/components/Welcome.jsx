@@ -21,7 +21,7 @@ const Welcome = () => {
         href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
       />
 
-      <section className="section is-title-bar">
+      {/* <section className="section is-title-bar">
         <div className="level">
           <div className="level-left">
             <div className="level-item">
@@ -47,13 +47,13 @@ const Welcome = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="hero is-hero-bar">
         <div className="hero-body">
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">Selamat Datang di Aplikasi Inventaris</h1>
+                <h1 className="title">Dashboard Aplikasi Inventaris</h1>
               </div>
             </div>
           </div>

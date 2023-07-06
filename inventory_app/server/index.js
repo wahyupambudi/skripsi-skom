@@ -13,6 +13,7 @@ import SrvRoute from "./routes/SrvRoute.js";
 import HisRoute from "./routes/HisRoute.js";
 import BhpRoute from "./routes/BhpRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
+import tmpRoute from "./routes/tmpRoute.js";
 
 // import config database
 import db from "./config/database.js";
@@ -76,6 +77,7 @@ app.use(SrvRoute);
 app.use(HisRoute);
 app.use(BhpRoute);
 app.use(AuthRoute);
+app.use(tmpRoute);
 
 app.listen(process.env.APP_PORT, () => {
   console.log("Server up and running...");

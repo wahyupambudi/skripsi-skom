@@ -26,6 +26,22 @@ export const deleteBarang = async (req, res) => {
       const filepath = `./public/images/barang/${barang.image_brg}`;
       const filePathQr = `./public/images/barang/qrcode/${barang.qrcode_brg}`;
 
+      fs.copyFile(
+        `./public/images/barang/${barang.image_brg}`,
+        `./public/images/temp/barang/${barang.image_brg}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
+      fs.copyFile(
+        `./public/images/barang/qrcode/${barang.qrcode_brg}`,
+        `./public/images/temp/barang/qrcode/${barang.qrcode_brg}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
       if (!fs.existsSync(filepath)) {
         fs.unlinkSync(filePathQr);
       } else if (!fs.existsSync(filePathQr)) {
@@ -47,6 +63,23 @@ export const deleteBarang = async (req, res) => {
       // hapus gambar
       const filepath = `./public/images/barang/${barang.image_brg}`;
       const filePathQr = `./public/images/barang/qrcode/${barang.qrcode_brg}`;
+
+      fs.copyFile(
+        `./public/images/barang/${barang.image_brg}`,
+        `./public/images/temp/barang/${barang.image_brg}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
+      fs.copyFile(
+        `./public/images/barang/qrcode/${barang.qrcode_brg}`,
+        `./public/images/temp/barang/qrcode/${barang.qrcode_brg}`,
+        async (err) => {
+          if (err) throw err;
+        }
+      );
+
       if (!fs.existsSync(filepath)) {
         fs.unlinkSync(filePathQr);
       } else if (!fs.existsSync(filePathQr)) {
