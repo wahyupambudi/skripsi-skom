@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
 
-const App = () => {
+const QrCodeScanner = () => {
   const [data, setData] = useState("");
   const [redirect, setRedirect] = useState(false);
 
@@ -22,10 +22,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <QrReader
+    <h3>Silahkan Scan menggunakan Fitur ini</h3>
+    <p style={{color:'red'}} >Harap aktifkan kamera</p>
+      <QrReader 
         onResult={handleScan}
         videoId="video"
         scanDelay={500}
+        style={{ width: "300px" }}
       />
       <div>
         {data && (
@@ -38,4 +41,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default QrCodeScanner;
