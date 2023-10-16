@@ -26,6 +26,9 @@ const QrCodeScanner = () => {
     <p style={{color:'red'}} >Harap aktifkan kamera</p>
       <QrReader 
         onResult={handleScan}
+        constraints= {{
+          facingMode: 'environment'
+        }}
         videoId="video"
         scanDelay={500}
         style={{ width: "300px" }}
